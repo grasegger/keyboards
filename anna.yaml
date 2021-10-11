@@ -241,12 +241,16 @@ pcbs:
         anchor:
           shift: [72 - u, 38] 
           rotate: -45 -90
-      logo:
-        type: logo
+      silk:
+        type: silk
+        params:
+          path: ../silk.kicad_mod
         anchor:
           shift: [u + .5,8]
-      rlogo:
-        type: logo
+      rsilk:
+        type: silk
+        params:
+          path: ../silk.kicad_mod
         anchor:
           shift: [.5 + 8.5 u,8]
       rmcu:
