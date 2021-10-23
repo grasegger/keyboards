@@ -1,0 +1,231 @@
+points:
+  zones:
+    matrix:
+      anchor:
+        shift: [2u, -6u]
+      columns:
+        pinky:
+          rows:
+            bottom:
+              bind: [0, 0, 0, 0]
+              column_net: P020
+              padding: u
+            home:
+              bind: [0, 0, 0, 0]
+              column_net: P022
+              padding: u
+            top:
+              bind: [0, 0, 0, 0]
+              column_net: P024
+              padding: u
+
+        ring:
+          spread: u + 2
+          stagger: u - 6
+          rotate: -5
+          rows:
+            bottom:
+              bind: [0, 0, 0, 0]
+              column_net: P100
+              padding: u
+            home:
+              bind: [0, 0, 0, 0]
+              column_net: P011
+              padding: u
+            top:
+              bind: [0, 0, 0, 0]
+              column_net: P104
+              padding: u
+
+        middle:
+          spread: u + .5
+          stagger: u/3
+          rotate: -2.5
+          rows:
+            bottom:
+              bind: [0, 0, 0, 0]
+              column_net: P101
+              padding: u
+            home:
+              bind: [0, 0, 0, 0]
+              column_net: P102
+              padding: u
+            top:
+              bind: [0, 0, 0, 0]
+              column_net: P106
+              padding: u
+          key:
+            shift: [0.2, 0]
+
+        index:
+          spread: u - 1
+          stagger: -u/3
+          rotate: -5
+          origin: [0, -u]
+          rows:
+            bottom:
+              bind: [0, 0, 0, 0]
+              column_net: P111
+              padding: u
+            home:
+              bind: [0, 0, 0, 0]
+              column_net: P010
+              padding: u
+            top:
+              bind: [0, 0, 0, 0]
+              column_net: P009
+              padding: u
+
+        inner:
+          spread: u
+          stagger: -u/6
+          rows: 
+            bottom:
+              bind: [0, 0, 0, 0]
+              column_net: P113
+              padding: u
+            home:
+              bind: [0, 0, 0, 0]
+              column_net: P002
+              padding: u
+            top:
+              bind: [0, 0, 0, 0]
+              column_net: P115
+              padding: u
+
+        center:
+          spread: u
+          stagger: u/2 -u/6
+          rows: 
+            bottom:
+              bind: [0, 0, 0, 0]
+              column_net: P029
+              padding: u
+            home:
+              bind: [0, 0, 0, 0]
+              column_net: P031
+              padding: u
+
+
+        thumb:
+          spread: -u
+          stagger: -4.5u 
+          rows:
+            inner:
+              bind: [0, 0, 0, 0]
+              column_net: P017
+              padding: u
+              shift: [-u, 2u + u/2]
+            outer:
+              bind: [0, 0, 0, 0]
+              column_net: P006
+              padding: u
+              shift: [u, u - u/3]
+            home:
+              bind: [0, 0, 0, 0]
+              column_net: P008
+              padding: u
+      key:
+        footprints:
+          mx:
+            type: mx
+            nets:
+              from: =column_net
+              to: GND
+            params:
+                keycaps: true
+                reverse: true
+                hotswap: true
+
+outlines:
+  exports:
+    raw:
+      - type: keys
+        side: left
+        size: [14 , 14]
+        corner: 0
+    panel:
+      - type: outline
+        name: raw
+        fillet: 0
+    frame:
+      - type: keys
+        side: left
+        size: [u,u]
+pcbs:
+  anna:
+    footprints:
+      on_off:
+        type: slider
+        anchor:
+          ref: matrix_center_bottom
+          rotate: -90
+          shift: [u - 11.5, -u - u/2 +1]
+        params:
+          side: B
+        nets:
+          to: BAT+
+          from: BATPSWITCH
+      on_off_reverse:
+        type: slider
+        anchor:
+          ref: matrix_center_bottom
+          rotate: -90
+          shift: [u - 11.5, -u - u/2 +1]
+        params:
+          side: F
+        nets:
+          to: BAT+
+          from: BATPSWITCH
+      reset:
+        type: reset
+        anchor:
+          ref: matrix_thumb_home
+          rotate: 90
+          shift: [-u/2 + 2, u/2 + 2.8]
+        nets:
+          from: RST
+          to: GND
+      bat:
+        type: jstph
+        anchor:
+          ref: matrix_center_bottom
+          rotate: 90
+          shift: [u/10, -u - u/2 + 1] 
+        params:
+          side: B
+        nets:
+          pos: BATPSWITCH
+          neg: GND
+      trrs:
+        type: trrs
+        anchor:
+          ref: matrix_center_bottom
+          rotate: -90
+          shift: [u/4, -u + u/7]
+        params:
+          reverse: true
+          symmetric: true
+        nets:
+          A: GND
+          B: GND
+          C: VCC
+          D: DATA
+      puck:
+        type: puck
+        anchor:
+          shift: [u+5, 0] 
+          rotate: -137.5 -180
+          ref: matrix_middle_home
+      silk:
+        type: silk
+        params:
+          path: ../output/anna.kicad_mod
+      mcu:
+        type: nice_nano
+        anchor:
+          ref: matrix_inner_bottom
+          shift: [u/2, -u -2] 
+          rotate: 180
+        params:
+          orientation: down
