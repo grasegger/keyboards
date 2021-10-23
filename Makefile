@@ -1,4 +1,4 @@
-all: docker
+all: export
 
 ergogen/node_modules:
 	cd ergogen; npm install --no-package-lock
