@@ -18,9 +18,9 @@ jobs:
         submodules: true
     - name: Install dependencies
       run: |
-        apt update
-        apt install -y python3-dev python3-pip openjdk-11-jdk-headless x11vnc python3-numpy python3-lxml imagemagick python3-yaml subversion python3-psutil xvfb recordmydesktop xdotool xfce4 npm openssh-client kicad
-        pip3 install --no-compile kibot kiauto pcbdraw svg2mod
+        sudo apt update
+        sudo apt install -y python3-dev python3-pip openjdk-11-jdk-headless x11vnc python3-numpy python3-lxml imagemagick python3-yaml subversion python3-psutil xvfb recordmydesktop xdotool xfce4 npm openssh-client kicad
+        sudo pip3 install --no-compile kibot kiauto pcbdraw svg2mod
         svn co svn://svn.repo.hu/freerouting_cli/trunk && cd trunk && make && make install && cd .. && rm -rf trunk
         mkdir -p ~/.kicad/scripting/plugins
         cd ~/.kicad/scripting/plugins && git clone https://github.com/asukiaaa/gerber_to_order.git
