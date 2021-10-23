@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Keebs
 
 on:
   push:
@@ -10,13 +10,15 @@ jobs:
 
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: alpine-latest
 
     steps:
     - uses: actions/checkout@v2
       with:
         submodules: true
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag keeb
-    - name: Run docker image
-      run: docker run --rm -v $(pwd):/mount keeb
+    - name: Install dependencies
+      run: |
+        apk add --no-cache git build-base python3-dev py3-pip openjdk11 linux-headers wget unzip x11vnc py3-numpy py3-lxml imagemagick-libs py3-yaml subversion py3-psutil xvfb recordmydesktop xdotool gnome xdpyinfo npm openssh
+        apk add --no-cache -X http://dl-cdn.alpinelinux.org/alpine/edge/testing kicad py3-pybars3
+        pip install --no-compile kibot kiauto pcbdraw svg2mod
+
