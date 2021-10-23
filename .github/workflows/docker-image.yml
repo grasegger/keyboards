@@ -26,8 +26,13 @@ jobs:
         cd ~/.kicad/scripting/plugins && git clone https://github.com/asukiaaa/gerber_to_order.git
 
     - name: build
-      run: make
+      run: make || true
 
     - name: list
       run: ls -lah
 
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2.2.4
+      with:
+        path: *.ogv
+        retention-days: 1
