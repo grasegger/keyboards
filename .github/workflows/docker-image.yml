@@ -17,4 +17,4 @@ jobs:
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag keeb
     - name: Run docker image
-      run: docker run --rm -it -v $(pwd):/mount keeb
+      run: docker run --rm -v $(pwd):/mount keeb
