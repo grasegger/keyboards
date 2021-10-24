@@ -231,4 +231,4 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    export_dsn(args.kicad_pcb_file, args.output_dir, args.record)
+    export_dsn(args.kicad_pcb_file, args.output_dir)

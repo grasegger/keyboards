@@ -17,9 +17,9 @@ watch: output
 
 export: output
 	rm -f output/pcbs/anna.dsn
-	python3 create_dsn_export.py -record output/pcbs/anna.kicad_pcb .
+	python3 create_dsn_export.py output/pcbs/anna.kicad_pcb .
 	cd output/pcbs;  /opt/freerouting_cli/bin/freerouting_cli -de anna.dsn -do anna.ses -ap 100 -ds ../../autoroute_vias.rules
-	python3 import_ses_to_kicad.py -record output/pcbs/anna.kicad_pcb .
+	python3 import_ses_to_kicad.py output/pcbs/anna.kicad_pcb .
 
 docker:
 	docker build -t keeb . 
