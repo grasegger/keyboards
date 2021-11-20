@@ -10,9 +10,10 @@ output: ergogen/node_modules silk
 
 # sh -c 'cd /src/output/pcbs; pcbdraw edc_shield.kicad_pcb ../../previews/edc_shield.png; pcbdraw edc.kicad_pcb ../../previews/edc.png '
 
-previews: output
-	docker run --rm -it -v $(shell pwd):/src yaqwsx/kikit:nightly pcbdraw --style builtin:set-white-hasl.json /src/output/pcbs/edc_shield.kicad_pcb /src/previews/edc_shield_front.png
-	docker run --rm -it -v $(shell pwd):/src yaqwsx/kikit:nightly pcbdraw --back --style builtin:set-white-hasl.json /src/output/pcbs/edc_shield.kicad_pcb /src/previews/edc_shield_back.png
+previews: freerouting
+#	docker run --rm -it -v $(shell pwd):/src yaqwsx/kikit:nightly pcbdraw --style builtin:set-white-hasl.json /src/output/pcbs/edc_shield.kicad_pcb /src/previews/edc_shield_front.png
+#	docker run --rm -it -v $(shell pwd):/src yaqwsx/kikit:nightly pcbdraw --back --style builtin:set-white-hasl.json /src/output/pcbs/edc_shield.kicad_pcb /src/previews/edc_shield_back.png
+	docker run --rm -it -v $(shell pwd):/src yaqwsx/kikit:nightly pcbdraw --back --style builtin:set-white-hasl.json /src/output/pcbs/edc.kicad_pcb /src/previews/edc_board.png
 
 
 .PHONY: silk
