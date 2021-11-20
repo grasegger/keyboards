@@ -1,0 +1,468 @@
+points:
+  zones:
+    matrix:
+      columns:
+        pinky:
+          rows:
+            bottom:
+              column_net: P21
+            home:
+              column_net: P18
+ 
+        ring:
+          spread: u
+          stagger: u
+          rows:
+            bottom:
+              column_net: P20
+            home:
+              column_net: P15
+            top:
+              column_net: P16
+      
+        middle:
+          spread: u
+          stagger: -u
+          rows:
+            thumb:
+              column_net: P7
+              shift: [0, -u]
+            bottom:
+              column_net: P9
+              bind: 2u
+            home:
+              column_net: P19
+            top:
+              column_net: P14
+    
+        index:
+          spread: u
+          stagger: -u
+          rows:
+            thumb:
+              column_net: P4
+            bottom:
+              column_net: P5
+            home:
+              column_net: P6
+            top:
+              column_net: P8
+                
+
+        inner:
+          spread: u
+          rows:
+            thumb:
+              column_net: P3
+            bottom:
+              column_net: P1
+            home:
+              column_net: P0
+            top:
+              column_net: P2
+              
+     
+      key:
+        footprints:
+          mx:
+            type: mx
+            nets:
+              from: =column_net
+              to: GND
+            params:
+                hotswap: true
+                keycaps: true
+
+      mirror:
+        ref: matrix_inner_thumb
+        distance: 2u
+
+
+outlines:
+  exports:
+    raw:
+      - type: keys
+        side: left
+        size: [14 , 14]
+        corner: 0
+        bound: true
+      - type: keys
+        side: right
+        size: [14 , 14]
+        corner: 0
+        bound: true
+    panel:
+      - type: outline
+        name: raw
+        fillet: 0
+    pcbkeys:
+      - type: keys
+        side: left
+        size: [u,u]
+        corner: 0
+      - type: keys
+        side: right
+        size: [u,u]
+        corner: 0
+      
+    pcb:
+      - type: outline
+        fillet: 2
+        name: pcbkeys
+        
+# glue between the sides
+      - type: rectangle
+        size: [u, 2]
+        anchor:
+          ref: matrix_middle_top
+          shift: [2.5u, 5]
+      - type: circle
+        operation: subtract
+        radius: .6
+        anchor:
+          ref: matrix_middle_top
+          shift: [2.5u + .6, 5 + 1]
+      - type: circle
+        operation: subtract
+        radius: .6
+        anchor:
+          ref: mirror_matrix_middle_top
+          shift: [2.5u + .6, 5 + 1]
+          
+#      - type: circle
+#        operation: subtract
+#        radius: .5
+#        anchor:
+#          ref: matrix_pinky_bottom
+#          shift: [102, 30.5]  
+#      - type: circle
+#        operation: subtract
+#        radius: .5
+#        anchor:
+#          ref: matrix_pinky_bottom
+#          shift: [116, 32]
+#      - type: circle
+#        operation: subtract
+#        radius: .5
+#        anchor:
+#          ref: matrix_pinky_bottom
+#          shift: [116, 30.5]
+
+    top_plate:
+      - type: outline
+        name: pcb
+        fillet: 1
+      - type: keys
+        side: left
+        operation: subtract
+        bound: false
+        size:  [14, 14]
+
+        # reset button cutout
+      - type: rectangle
+        operation: subtract
+        size: 25 
+        anchor:
+          ref: matrix_middle_bottom
+          rotate: 45
+          shift: [-2.5u, 2u - 3]
+
+# screw holes top
+      - type: circle
+        radius: 1.1
+        operation: subtract
+        anchor:
+          ref: matrix_middle_bottom
+          shift: [ -2u, 2u]
+      - type: circle
+        radius: 1.1
+        operation: subtract
+        anchor:
+          ref: matrix_middle_bottom
+          shift: [-2u, -2u]
+      - type: circle
+        radius: 1.1
+        operation: subtract
+        anchor:
+          ref: matrix_middle_bottom
+          shift: [u - u/2 + 1.6, 2u]
+      - type: rectangle
+        operation: subtract
+        size: [3, 10]
+        anchor:
+          ref: mirror_matrix_middle_top
+          shift: [83.5 - 2u +3, -5]
+
+# screw holes bottom
+      - type: circle
+        radius: 1.1
+        operation: subtract
+        anchor:
+          ref: mirror_matrix_middle_bottom
+          shift: [ -2u, 2u]
+      - type: circle
+        radius: 1.1
+        operation: subtract
+        anchor:
+          ref: mirror_matrix_middle_bottom
+          shift: [-2u, -2u]
+      - type: circle
+        radius: 1.1
+        operation: subtract
+        anchor:
+          ref: mirror_matrix_middle_bottom
+          shift: [u - u/2 + 1.6, 2u]
+      - type: circle
+        radius: 1.1
+        operation: subtract
+        anchor:
+          ref: mirror_matrix_middle_bottom
+          shift: [-2u, u]
+      - type: circle
+        radius: 1.1
+        operation: subtract
+        anchor:
+          ref: mirror_matrix_middle_bottom
+          shift: [-u, -2u]
+      - type: circle
+        radius: 1.1
+        operation: subtract
+        anchor:
+          ref: mirror_matrix_middle_bottom
+          shift: [u + u/2, -2u]
+      - type: circle
+        radius: 1.1
+        operation: subtract
+        anchor:
+          ref: mirror_matrix_middle_bottom
+          shift: [u + u/2, u]
+          
+# puck hole bottom
+
+      - type: circle
+        radius: 1.1u
+        operation: subtract
+        anchor:
+          ref: mirror_matrix_middle_bottom
+          shift: [u/2, -u/6] 
+          
+
+    final:
+      - type: outline
+        name: pcb
+        fillet: 1
+
+        
+# on off left
+      - type: rectangle
+        operation: subtract
+        size: [3, 10]
+        anchor:
+          ref: matrix_middle_top
+          shift: [83.5 - 2u, -5]
+
+# on off right
+      - type: rectangle
+        operation: subtract
+        size: [3, 10]
+        anchor:
+          ref: mirror_matrix_middle_top
+          shift: [83.5 - 2u +3, -5]
+          
+# screw holes left
+      - type: circle
+        radius: 1.6
+        operation: subtract
+        anchor:
+          ref: matrix_middle_bottom
+          shift: [ -2u, 2u]
+      - type: circle
+        radius: 1.6
+        operation: subtract
+        anchor:
+          ref: matrix_middle_bottom
+          shift: [-2u, -2u]
+      - type: circle
+        radius: 1.6
+        operation: subtract
+        anchor:
+          ref: matrix_middle_bottom
+          shift: [u - u/2 + 1.6, 2u]
+      - type: circle
+        radius: 1.1
+        operation: subtract
+        anchor:
+          ref: matrix_middle_bottom
+          shift: [-2u, u]
+      - type: circle
+        radius: 1.1
+        operation: subtract
+        anchor:
+          ref: matrix_middle_bottom
+          shift: [-u, -2u]
+      - type: circle
+        radius: 1.1
+        operation: subtract
+        anchor:
+          ref: matrix_middle_bottom
+          shift: [u + u/2, -2u]
+      - type: circle
+        radius: 1.1
+        operation: subtract
+        anchor:
+          ref: matrix_middle_bottom
+          shift: [u + u/2, u]          
+
+# screw holes right
+      - type: circle
+        radius: 1.6
+        operation: subtract
+        anchor:
+          ref: mirror_matrix_middle_bottom
+          shift: [ -2u, 2u]
+      - type: circle
+        radius: 1.6
+        operation: subtract
+        anchor:
+          ref: mirror_matrix_middle_bottom
+          shift: [-2u, -2u]
+      - type: circle
+        radius: 1.6
+        operation: subtract
+        anchor:
+          ref: mirror_matrix_middle_bottom
+          shift: [u - u/2 + 1.6, 2u]
+      - type: circle
+        radius: 1.1
+        operation: subtract
+        anchor:
+          ref: mirror_matrix_middle_bottom
+          shift: [-2u, u]
+      - type: circle
+        radius: 1.1
+        operation: subtract
+        anchor:
+          ref: mirror_matrix_middle_bottom
+          shift: [-u, -2u]
+      - type: circle
+        radius: 1.1
+        operation: subtract
+        anchor:
+          ref: mirror_matrix_middle_bottom
+          shift: [u + u/2, -2u]
+      - type: circle
+        radius: 1.1
+        operation: subtract
+        anchor:
+          ref: mirror_matrix_middle_bottom
+          shift: [u + u/2, u]          
+
+
+pcbs:
+  edc_shield:
+    outlines:
+      top_plate:
+        outline: top_plate
+
+    footprints:
+      silk:
+        type: silk
+        params:
+          path: ../output/edc.kicad_mod
+     
+  edc:
+    outlines:
+      - outline: final
+    footprints:
+      on_off:
+        type: slider
+        anchor:
+          shift: [81.5 - 2u, 0]
+          ref: matrix_middle_top
+          rotate: -90
+        params:
+          side: B
+        nets:
+          from: BATPSWITCH
+          to: BAT+
+      battery_connector:
+        type: jstph
+        anchor:
+          rotate: 90
+          shift: [0, -14]
+          ref: matrix_pinky_bottom
+        params:
+          side: F
+        nets:
+          pos: BATPSWITCH
+          neg: GND
+      reset:
+        type: reset
+        anchor:
+          shift: [ -6 , 63]
+          rotate: 225
+          ref: matrix_pinky_bottom
+        nets:
+          from: RST
+          to: GND
+      puck:
+        type: puck
+        anchor:
+          shift: [u/2, -u/6] 
+          rotate: -0
+          ref: matrix_middle_bottom
+      mcu:
+        type: promicro
+        anchor:
+          shift: [66, 57]
+          ref: matrix_pinky_bottom
+          rotate: 180
+        params:
+          orientation: down
+
+      mirror_on_off:
+        type: slider
+        anchor:
+          shift: [81.5 - 2u, 0]
+          ref: mirror_matrix_middle_top
+          rotate: 90
+        params:
+          side: B
+        nets:
+          from: MIRROR_BATPSWITCH
+          to: MIRROR_BAT+
+      mirror_battery_connector:
+        type: jstph
+        anchor:
+          rotate: 90
+          shift: [0, -14]
+          ref: mirror_matrix_pinky_bottom
+        params:
+          side: F
+        nets:
+          pos: MIRROR_BATPSWITCH
+          neg: MIRROR_GND
+      mirror_reset:
+        type: reset
+        anchor:
+          shift: [ -6 , 63]
+          rotate: 225 - 90
+          ref: mirror_matrix_pinky_bottom
+        nets:
+          from: MIRROR_RST
+          to: MIRROR_GND
+      mirror_puck:
+        type: puck
+        anchor:
+          shift: [u/2, -u/6] 
+          rotate: -0
+          ref: mirror_matrix_middle_bottom
+      mirror_mcu:
+        type: promicro
+        anchor:
+          shift: [66, 57]
+          ref: mirror_matrix_pinky_bottom
+          rotate: 0
+        params:
+          orientation: down
+          mirror: true

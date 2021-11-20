@@ -1,26 +1,28 @@
-all: export
+all: output
 
 ergogen/node_modules:
-	cd ergogen; npm install --no-package-lock
+	cd ergogen; npm install
 
 .PHONY: output
 output: ergogen/node_modules silk
-	cd ergogen; node src/cli.js -o ../output ../tippers/anna.yaml
+	cd ergogen; node src/cli.js -o ../output ../variants/edc.yaml
+	sed -i '' 's|.*pad.*||' output/pcbs/edc_shield.kicad_pcb
+
+# sh -c 'cd /src/output/pcbs; pcbdraw edc_shield.kicad_pcb ../../previews/edc_shield.png; pcbdraw edc.kicad_pcb ../../previews/edc.png '
+
+previews: output
+	docker run --rm -it -v $(shell pwd):/src yaqwsx/kikit:nightly pcbdraw --style builtin:set-white-hasl.json /src/output/pcbs/edc_shield.kicad_pcb /src/previews/edc_shield_front.png
+	docker run --rm -it -v $(shell pwd):/src yaqwsx/kikit:nightly pcbdraw --back --style builtin:set-white-hasl.json /src/output/pcbs/edc_shield.kicad_pcb /src/previews/edc_shield_back.png
+
 
 .PHONY: silk
 silk: 
 	mkdir -p output
-	svg2mod -i tippers/anna.svg -o output/anna.kicad_mod -p 0.1
+	svg2mod -x -i silkscreens/edc.svg -o output/edc.kicad_mod
 
-watch: output
-	fswatch -o tippers | xargs -n1 -I{} make
+freerouting: output
+	cp freerouting.rules output/pcbs/edc.rules
+	java -jar freerouting.jar -de output/pcbs/edc.dsn -dr output/pcbs/edc.rules -do output/pcbs/edc.ses
+	rm output/pcbs/*.bin	
 
-export: output
-	rm -f output/pcbs/anna.dsn
-	python3 create_dsn_export.py output/pcbs/anna.kicad_pcb .
-	cd output/pcbs;  /opt/freerouting_cli/bin/freerouting_cli -de anna.dsn -do anna.ses -ap 100 -ds ../../autoroute_vias.rules
-	python3 import_ses_to_kicad.py output/pcbs/anna.kicad_pcb .
 
-docker:
-	docker build -t keeb . 
-	docker run --rm -it -v $(shell pwd):/mount keeb

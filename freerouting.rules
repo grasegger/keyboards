@@ -6,12 +6,12 @@
   (autoroute_settings
     (fanout on)
     (eu.mihosoft.freerouting.autoroute on)
-    (postroute off)
+    (postroute on)
     (vias on)
-    (via_costs 1)
+    (via_costs 500)
     (plane_via_costs 5)
     (start_ripup_costs 100)
-    (start_pass_no 1)
+    (start_pass_no 467)
     (layer_rule F.Cu
       (active on)
       (preferred_direction horizontal)
@@ -26,9 +26,9 @@
     )
   )
   (rule
-    (width 150.0)
-    (clear 150.2)
-    (clear 130.0 (type smd_to_turn_gap))
+    (width 200.0)
+    (clear 300)
+    (clear 125.0 (type smd_to_turn_gap))
     (clear 50.0 (type smd_smd))
   )
   (padstack "Via[0-1]_800:400_um"
@@ -63,10 +63,9 @@
     )
   )
   (class "kicad_default"
-    P100 GND P024 P022 P020 P017 P008 P006
-    P031 P029 P113 P115 P002 P009 P010 P111
-    P011 P106 P104 BAT+ BATPSWITCH RST VCC DATA
-    P101 P102 P107
+    P9 GND P19 P20 P15 P16 P21 P18
+    P14 P8 P7 P6 P5 P4 P3 P2
+    P1 BATPSWITCH BAT+ RST VCC RAW P10 P0
     (clearance_class "kicad_default")
     (via_rule kicad_default)
     (rule
