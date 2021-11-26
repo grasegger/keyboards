@@ -8,7 +8,7 @@
     (eu.mihosoft.freerouting.autoroute on)
     (postroute on)
     (vias on)
-    (via_costs 500)
+    (via_costs 50)
     (plane_via_costs 5)
     (start_ripup_costs 100)
     (start_pass_no 467)

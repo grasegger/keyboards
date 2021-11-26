@@ -4,45 +4,47 @@ points:
       columns:
         pinky:
           rows:
-            bottom:
-              column_net: P21
             home:
-              column_net: P18
- 
+              column_net: P5
+            reset: 
+              column_net: RST
+            
         ring:
           spread: u
+          stagger: u/2
           rows:
             bottom:
-              column_net: P20
+              column_net: P6
             home:
-              column_net: P15
+              column_net: P2
       
         middle:
           spread: u
+          stagger: u/4
           rows:
             bottom:
-              column_net: P9
+              column_net: P7
             home:
-              column_net: P19
+              column_net: P3
+              bind: [0, 2u +7, 2u + u/4 + u/2, 2u +7]
     
         index:
           spread: u
-          stagger: -u
+          stagger: -u/2
           rows:
-            thumb:
-              column_net: P4
-            home:
-              column_net: P6
-              bind: [3u +7, u] 
             bottom:
-              column_net: P5
+              column_net: P8
+            home:
+              column_net: P4
                 
 
         inner:
-          spread: u
+          spread: u + u/6
+          rotate: -30
+          stagger: -2u + u/2
           rows:
             thumb:
-              column_net: P3
+              column_net: P9
               
       key:
         footprints:
@@ -90,104 +92,43 @@ outlines:
         bound: false
         size:  [14, 14]
 
-        # reset button cutout
-      - type: rectangle
-        operation: subtract
-        size: 25 
-        anchor:
-          ref: matrix_middle_bottom
-          rotate: 45
-          shift: [-2.5u, 2u - 3]
-
-# screw holes top
-      - type: circle
-        radius: 1.1
-        operation: subtract
-        anchor:
-          ref: matrix_middle_bottom
-          shift: [ -2u, 2u]
-      - type: circle
-        radius: 1.1
-        operation: subtract
-        anchor:
-          ref: matrix_middle_bottom
-          shift: [-2u, -2u]
-      - type: circle
-        radius: 1.1
-        operation: subtract
-        anchor:
-          ref: matrix_middle_bottom
-          shift: [u - u/2 + 1.6, 2u]
-
     final:
       - type: outline
         name: pcb
         fillet: 1
 
-        
-# on off left
       - type: rectangle
         operation: subtract
         size: [3, 10]
         anchor:
-          ref: matrix_middle_home
-          shift: [83.5 - 2u, -5]
-          
-# screw holes left
+          shift: [88.5+2, -10]
+
       - type: circle
-        radius: 1.6
         operation: subtract
+        radius: 1.55
         anchor:
-          ref: matrix_middle_bottom
-          shift: [ -2u, 2u]
+          shift: [-13.5, 39.5]
       - type: circle
-        radius: 1.6
         operation: subtract
+        radius: 1.55
         anchor:
-          ref: matrix_middle_bottom
-          shift: [-2u, -2u]
+          shift: [89.5, 39.5]
       - type: circle
-        radius: 1.6
         operation: subtract
+        radius: 1.55
         anchor:
-          ref: matrix_middle_bottom
-          shift: [u - u/2 + 1.6, 2u]
+          shift: [-13.5, -25.5]
       - type: circle
-        radius: 1.1
         operation: subtract
+        radius: 1.55
         anchor:
-          ref: matrix_middle_bottom
-          shift: [-2u, u]
-      - type: circle
-        radius: 1.1
-        operation: subtract
-        anchor:
-          ref: matrix_middle_bottom
-          shift: [-u, -2u]
-      - type: circle
-        radius: 1.1
-        operation: subtract
-        anchor:
-          ref: matrix_middle_bottom
-          shift: [u + u/2, -2u]
-      - type: circle
-        radius: 1.1
-        operation: subtract
-        anchor:
-          ref: matrix_middle_bottom
-          shift: [u + u/2, u]          
+          shift: [89.5, -12.5]
 
 pcbs:
   lasagna_shield:
     outlines:
       top_plate:
         outline: top_plate
-
-    footprints:
-      silk:
-        type: silk
-        params:
-          path: ../output/edc.kicad_mod
      
   lasagna:
     outlines:
@@ -196,34 +137,34 @@ pcbs:
       on_off:
         type: slider
         anchor:
-          shift: [81.5 - 2u, 0]
-          ref: matrix_middle_home
+          shift: [88.5, -5]
           rotate: -90
         params:
           side: B
         nets:
           from: BATPSWITCH
-          to: BAT+
+          to: RAW
+      on_off_two:
+        type: slider
+        anchor:
+          shift: [88.5, -5]
+          rotate: -90
+        params:
+          side: F
+        nets:
+          from: BATPSWITCH
+          to: RAW
       battery_connector:
         type: jstph
         anchor:
           rotate: 90
           shift: [0, -14]
-          ref: matrix_pinky_bottom
+          ref: matrix_pinky_home
         params:
           side: F
         nets:
           pos: BATPSWITCH
           neg: GND
-      reset:
-        type: reset
-        anchor:
-          shift: [ -6 , 63]
-          rotate: 225
-          ref: matrix_pinky_bottom
-        nets:
-          from: RST
-          to: GND
       puck:
         type: puck
         anchor:
@@ -233,8 +174,19 @@ pcbs:
       mcu:
         type: promicro
         anchor:
-          shift: [66, 57]
-          ref: matrix_pinky_bottom
-          rotate: 180
+          shift: [75, 23.5]
+          rotate: -90
         params:
           orientation: down
+      mcu_two:
+        type: promicro
+        anchor:
+          shift: [78, 23.5]
+          rotate: -90
+        params:
+          orientation: up
+      bat:
+        type: lp502030
+        anchor:
+          shift: [28, -11.5]
+    

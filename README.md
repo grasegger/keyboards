@@ -14,8 +14,3 @@ Nothing in here should be used yet. You have been warned.
 | Daemon  | MX Kailh Hotswap | MX      | Macro   | bluetooth pro micro | ???    | trackball                  | xxx | idea       |
 | Mouse   | Kailh Choc V1    | Choc    | Typing  | bluetooth pro micro | 36     | very low profile           | xxx | idea       |
 | Bread   | MX Kailh Hotswap | MX      | Testing | bluetooth pro micro | 26     | first prototype, trackball | --- | cancelled  |
-
-
-
-
-
