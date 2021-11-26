@@ -17,4 +17,4 @@ Nothing in here should be used yet. You have been warned.
 
 
 ## lasagna
-![](./previews/lasanga_board.png)
+![](/previews/lasanga_board.png)
