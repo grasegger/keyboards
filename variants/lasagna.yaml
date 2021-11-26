@@ -5,7 +5,7 @@ points:
         pinky:
           rows:
             home:
-              column_net: P5
+              column_net: P15
             reset: 
               column_net: RST
             
@@ -14,18 +14,18 @@ points:
           stagger: u/2
           rows:
             bottom:
-              column_net: P6
+              column_net: P14
             home:
-              column_net: P2
+              column_net: P18
       
         middle:
           spread: u
           stagger: u/4
           rows:
             bottom:
-              column_net: P7
+              column_net: P16
             home:
-              column_net: P3
+              column_net: P19
               bind: [0, 2u +7, 2u + u/4 + u/2, 2u +7]
     
         index:
@@ -33,9 +33,9 @@ points:
           stagger: -u/2
           rows:
             bottom:
-              column_net: P8
+              column_net: P10
             home:
-              column_net: P4
+              column_net: P20
                 
 
         inner:
@@ -112,7 +112,7 @@ outlines:
         operation: subtract
         radius: 1.55
         anchor:
-          shift: [89.5, 39.5]
+          shift: [57.5, 39.5]
       - type: circle
         operation: subtract
         radius: 1.55
@@ -122,7 +122,12 @@ outlines:
         operation: subtract
         radius: 1.55
         anchor:
-          shift: [89.5, -12.5]
+          shift: [57.5, -25.5]
+      - type: circle
+        operation: subtract
+        radius: 1.55
+        anchor:
+          shift: [89.5, u/3]
 
 pcbs:
   lasagna_shield:

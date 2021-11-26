@@ -4,7 +4,7 @@
     fortyfive_degree
   )
   (autoroute_settings
-    (fanout on)
+    (fanout off)
     (eu.mihosoft.freerouting.autoroute on)
     (postroute on)
     (vias on)
@@ -16,18 +16,18 @@
       (active on)
       (preferred_direction horizontal)
       (preferred_direction_trace_costs 1.0)
-      (against_preferred_direction_trace_costs 1.0)
+      (against_preferred_direction_trace_costs 2.0)
     )
     (layer_rule B.Cu
       (active on)
       (preferred_direction horizontal)
       (preferred_direction_trace_costs 1.0)
-      (against_preferred_direction_trace_costs 1.0)
+      (against_preferred_direction_trace_costs 2.0)
     )
   )
   (rule
     (width 200.0)
-    (clear 300)
+    (clear 200)
     (clear 125.0 (type smd_to_turn_gap))
     (clear 50.0 (type smd_smd))
   )
