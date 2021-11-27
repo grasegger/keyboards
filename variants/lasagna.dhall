@@ -81,20 +81,19 @@ let keyconfig =
         }
       }
 
+let mkColumn = \(net_one: Text) -> \(net_two: Text) -> \(stagger: Double) ->
+  let column = Column::{
+        stagger = stagger
+        , rows = Rows::{
+          , home = Key::{ column_net = net_one }
+          , top = Some Key::{ column_net = net_two }
+          }
+        }
+  in column
+
 let columns =
-      { a = Column::{
-        , rows = Rows::{
-          , home = Key::{ column_net = "P16" }
-          , top = Some Key::{ column_net = "RST" }
-          }
-        }
-      , b = Column::{
-        , stagger = halfu
-        , rows = Rows::{
-          , home = Key::{ column_net = "P14" }
-          , top = Some Key::{ column_net = "P2" }
-          }
-        }
+      { a = mkColumn "P16" "RST" 0.0
+      , b = mkColumn "P14" "P2" halfu
       , c = Column::{
         , stagger = quarteru
         , rows = Rows::{
@@ -105,13 +104,7 @@ let columns =
             }
           }
         }
-      , d = Column::{
-        , stagger = minhalfu
-        , rows = Rows::{
-          , home = Key::{ column_net = "P10" }
-          , top = Some Key::{ column_net = "P1" }
-          }
-        }
+      , d = mkColumn "P10" "P1" minhalfu
       , e = Column::{
         , stagger = -29.0
         , rotate = 330
@@ -156,7 +149,7 @@ let on_off_left =
       { type = "slider"
       , anchor = on_off_anchor
       , nets = { from = "BATPSWITCH", to = "RAW" }
-      }
+      } 
 
 let on_off_right =
       { type = "slider"
@@ -215,7 +208,7 @@ let trackball_left =
       { type = "pimoroni477"
       , anchor = trackball_anchor
       , nets =
-        { GND = "GND", VCC = "VCC", SCA = "P20", SLC = "P17", INT = "P19" }
+        { GND = "GND", VCC = "VCC", SCA = "P17", SCL = "P20", INT = "P19" }
       }
 
 let trackball_right =
@@ -224,8 +217,8 @@ let trackball_right =
           , nets =
             { GND = "MIRROR_GND"
             , VCC = "MIRROR_VCC"
-            , SCA = "MIRROR_P20"
-            , SLC = "MIRROR_P17"
+            , SCA = "MIRROR_P17"
+            , SCL = "MIRROR_P20"
             , INT = "MIRROR_P19"
             }
           }
