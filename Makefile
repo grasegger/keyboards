@@ -18,18 +18,17 @@ pre-cleanup: output previews
 lasagna: output/pcbs/lasagna.kicad_pcb
 
 .PHONY: output/pcbs/lasagna.kicad_pcb
-output/pcbs/lasagna.kicad_pcb: pre-cleanup ergogen/node_modules
-	cd ergogen; node src/cli.js -o ../output ../variants/lasagna.yaml
+output/pcbs/lasagna.kicad_pcb: pre-cleanup ergogen/node_modules output/lasagna.yaml
+	cd ergogen; node src/cli.js -o ../output ../output/lasagna.yaml
 
 .PHONY: preview-lasagna
 preview-lasagna: previews/lasagna_shield_front.png previews/lasagna_shield_back.png previews/lasagna_board.png
 
-
 previews/lasagna_shield_front.png: lasagna-import-ses
-	docker run --rm -it -v $(shell pwd):/src yaqwsx/kikit:nightly pcbdraw --style builtin:jlcpcb-green-hasl.json /src/output/pcbs/lasagna_shield.kicad_pcb /src/previews/lasagna_shield_front.png
+#	docker run --rm -it -v $(shell pwd):/src yaqwsx/kikit:nightly pcbdraw --style builtin:jlcpcb-green-hasl.json /src/output/pcbs/lasagna_shield.kicad_pcb /src/previews/lasagna_shield_front.png
 	
 previews/lasagna_shield_back.png: lasagna-import-ses
-	docker run --rm -it -v $(shell pwd):/src yaqwsx/kikit:nightly pcbdraw --back --style builtin:jlcpcb-green-hasl.json /src/output/pcbs/lasagna_shield.kicad_pcb /src/previews/lasagna_shield_back.png
+#	docker run --rm -it -v $(shell pwd):/src yaqwsx/kikit:nightly pcbdraw --back --style builtin:jlcpcb-green-hasl.json /src/output/pcbs/lasagna_shield.kicad_pcb /src/previews/lasagna_shield_back.png
 	
 previews/lasagna_board.png: lasagna-import-ses
 	docker run --rm -it -v $(shell pwd):/src yaqwsx/kikit:nightly pcbdraw --style builtin:jlcpcb-green-hasl.json /src/output/pcbs/lasagna.kicad_pcb /src/previews/lasagna_board_front.png
@@ -61,3 +60,6 @@ docker-image:
 
 .PHONY: lasagna
 lasagna: preview-lasagna
+
+output/lasagna.yaml: output
+	dhall-to-yaml --explain < variants/lasagna.dhall > output/lasagna.yaml
