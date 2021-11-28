@@ -75,7 +75,7 @@ jobs:
       - name: Export DSN file
         run: |
           chmod +x bin/export_dsn.py
-          ./bin/export_dsn.py
+          ./bin/export_dsn.py ${{ env.ANNA_VARIANT }}
 
       - name: Archive (DSN file)
         uses: actions/upload-artifact@v2
