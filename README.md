@@ -16,5 +16,11 @@ Nothing in here should be used yet. You have been warned.
 | Bread   | MX Kailh Hotswap | MX      | Testing | bluetooth pro micro | 26     | first prototype, trackball | --- | cancelled  |
 
 
-## lasagna
-![](/previews/lasanga_board.png)
+## How to build
+
+Either use the github action and its artifacts or install [act](https://github.com/nektos/act) and run `akt -b` in the repository root.
+
+## Previews
+
+### Lasagna
+![](./previews/lasanga_board.png)
