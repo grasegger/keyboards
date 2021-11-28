@@ -8,6 +8,8 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build:
+    env:
+      NODE_VERSION: 16
     runs-on: ubuntu-latest
 
     steps:
@@ -15,10 +17,47 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: true+
-          
-      - name: Setup Dhall
+
+      - name: Setup node without cache
+        uses: actions/setup-node@v2
+        if: ${{ env.ACT }}
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Setup node with cache
+        uses: actions/setup-node@v2
+        if: ${{ !env.ACT }}
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: ergogen/package-lock.json
+
+      - name: Check dhall is installed
+        id: dhall
+        uses: andstor/file-existence-action@v1
+        with:
+          files: "bin/dhall"
+                    
+      - name: Setup dhall if it is not installed
+        if: steps.dhall.outputs.file_exists == 'false'
         uses: dhall-lang/setup-dhall@v4
         
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - name: Environment Preparation
+        run: |
+          mkdir -p output
+          cd ergogen
+          npm i
+
+      - name: Create ergogen config
+        run: bin/dhall-to-yaml --explain --file variants/lasagna.dhall --output output/lasagna.yaml
+
+      - name: Archive (Ergogen Config)
+        uses: actions/upload-artifact@v2
+        with:
+          name: lasagna
+          path: output/lasagna.yaml
+      
+      - name: Run ergogen
+        run: |
+          cd ergogen
+          node src/cli.js -o ../output ../output/lasagna.yaml
