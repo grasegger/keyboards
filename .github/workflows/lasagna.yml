@@ -72,7 +72,7 @@ jobs:
           cd ergogen
           node src/cli.js -o ../output ../output/${{ env.ANNA_VARIANT }}.yaml
           cd ..
-          cp output/pcbs/${{ env.ANNA_VARIANT }}.kicad_pcb ${{ env.ANNA_VARIANT }}_ergogen.pcb
+          cp output/pcbs/${{ env.ANNA_VARIANT }}.kicad_pcb ${{ env.ANNA_VARIANT }}_ergogen.kicad_pcb
 
       - name: Archive (Ergogen PCB)
         uses: actions/upload-artifact@v2
