@@ -23,7 +23,7 @@ import time
 from contextlib import contextmanager
 from xvfbwrapper import Xvfb
 
-electronics_root = "/src"
+electronics_root = "."
 repo_root = os.path.dirname(electronics_root)
 sys.path.append(repo_root)
 
