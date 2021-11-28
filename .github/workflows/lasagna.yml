@@ -71,3 +71,20 @@ jobs:
         run: |
           cd ergogen
           node src/cli.js -o ../output ../output/${{ env.ANNA_VARIANT }}.yaml
+
+      - name: Export DSN file
+        run: |
+          chmod +x bin/export_dsn.py
+          ./bin/export_dsn.py
+
+      - name: Archive (DSN file)
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.ANNA_VARIANT }}
+          path: output/${{ env.ANNA_VARIANT }}.dsn
+
+      - name: Archive (Videos)
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.ANNA_VARIANT }}
+          path: "*.ogv"
