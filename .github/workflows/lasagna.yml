@@ -78,7 +78,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: ${{ env.ANNA_VARIANT }}
-          path: ${{ env.ANNA_VARIANT }}_ergogen.pcb
+          path: ${{ env.ANNA_VARIANT }}_ergogen.kicad_pcb
 
       - name: Export DSN file
         run: |
