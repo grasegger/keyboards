@@ -135,11 +135,11 @@ jobs:
 
       - name: Previews
         run: |
-        pcbdraw --style builtin:jlcpcb-green-hasl.json output/pcbs/lasagna.kicad_pcb ${{ env.ANNA_VARIANT }}_board_front.png
-      	pcbdraw --back --style builtin:jlcpcb-green-hasl.json output/pcbs/lasagna.kicad_pcb ${{ env.ANNA_VARIANT }}_board_back.png
-      	cd previews; mogrify -bordercolor transparent -border 20 -format png ${{ env.ANNA_VARIANT }}_board_*.png
-      	cd previews; montage -geometry +0+0 ${{ env.ANNA_VARIANT }}_board_front.png ${{ env.ANNA_VARIANT }}_board_back.png ${{ env.ANNA_VARIANT }}_board.png
-      	rm previews/${{ env.ANNA_VARIANT }}_board_*.png 
+          pcbdraw --style builtin:jlcpcb-green-hasl.json output/pcbs/lasagna.kicad_pcb ${{ env.ANNA_VARIANT }}_board_front.png
+      	  pcbdraw --back --style builtin:jlcpcb-green-hasl.json output/pcbs/lasagna.kicad_pcb ${{ env.ANNA_VARIANT }}_board_back.png
+      	  cd previews; mogrify -bordercolor transparent -border 20 -format png ${{ env.ANNA_VARIANT }}_board_*.png
+      	  cd previews; montage -geometry +0+0 ${{ env.ANNA_VARIANT }}_board_front.png ${{ env.ANNA_VARIANT }}_board_back.png ${{ env.ANNA_VARIANT }}_board.png
+      	  rm previews/${{ env.ANNA_VARIANT }}_board_*.png 
 
       - name: Archive (Previews)
         if: ${{ !env.ACT }}
