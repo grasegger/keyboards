@@ -115,47 +115,23 @@ def recorded_xvfb(video_filename, **xvfb_args):
 def xdotool(command):
     return subprocess.check_output(['xdotool'] + command)
 
-def eeschema_export_bom(output_directory):
-    wait_for_window_class("pcbnew", "pcbnew")
-    xdotool(['mousemove', '600', '430'])
-    xdotool(['click', '1'])
-    wait_for_window_class("pcbnew", "pcbnew")
-    xdotool(['mousemove', '180', '180'])
-    xdotool(['click', '1'])
-    wait_for_window("pcbnew", "Pcbnew")
-    xdotool(['mousemove', '24', '24'])
-    xdotool(['click', '1'])
-    xdotool(['key', 'ctrl+s'])
-    xdotool(['key', 'Down'])
-    xdotool(['key', 'Down'])
-    xdotool(['key', 'Down'])
-    xdotool(['key', 'Down'])
-    xdotool(['key', 'Down'])
-    xdotool(['key', 'Down'])
-    xdotool(['key', 'Down'])
-    xdotool(['key', 'Down'])
-    xdotool(['key', 'Down'])
-    xdotool(['key', 'Down'])
-    xdotool(['key', 'Right'])
-    xdotool(['key', 'Return'])
-    wait_for_window("pcbnew", "Specctra.*")
-    xdotool(['key', 'Return'])
-    wait_for_window_gone("pcbnew", "Specctra.*")
-    xdotool(['key', 'ctrl+q'])
-    wait_for_window_gone("pcbnew", "Pcbnew")
-    logger.info('Wait before shutdown')
-    time.sleep(5)
 
 def export_bom(target):
     schematic_file = os.path.join(electronics_root, 'output/pcbs/' + target + '.kicad_pcb')
     output_dir = electronics_root
 
-    screencast_output_file = os.path.join(output_dir, 'dsn.ogv')
+    screencast_output_file = os.path.join(output_dir, 'freerouting.ogv')
 
     with recorded_xvfb(screencast_output_file, width=800, height=600, colordepth=24):
-        with PopenContext(['pcbnew', schematic_file], close_fds=True) as eeschema_proc:
-            eeschema_export_bom(output_dir)
-            eeschema_proc.terminate()
+        with PopenContext([ "java", "-jar", "freerouting.jar",
+            "-de", "output/pcbs/" + target + ".dsn", 
+            "-dr", "output/pcbs/" + target + ".rules", 
+            "-do", "output/pcbs/" + target + ".ses", 
+            "-mp", "1000"
+            ], close_fds=True) as freerouting_proc:
+            wait_for_window('freerouting', 'Board Layout', timeout=300)
+            wait_for_window_gone('freerouting','Board Layout', timeout=300)
+            freerouting_proc.terminate()
 
 if __name__ == '__main__':
     export_bom(sys.argv[1])

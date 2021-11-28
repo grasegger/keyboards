@@ -1,0 +1,148 @@
+name: Lasagna
+on:
+  push:
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build:
+    env:
+      NODE_VERSION: 16
+      DEBIAN_FRONTEND: noninteractive
+      ANNA_VARIANT: lasagna
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Prepare ACT env
+        if: ${{ env.ACT }}
+        run: apt install -y sudo
+
+      - name: Global packages we need
+        run: |
+          pip install PcbDraw kikit xvfbwrapper
+          sudo apt -qq update
+          sudo apt -qq install -y --no-install-recommends kicad openjdk-11-jre kicad-libraries zip inkscape make git libmagickwand-dev inkscape libgraphicsmagick1-dev libmagickcore-dev openscad
+          sudo apt -qq install -y recordmydesktop xvfb xdotool
+
+      - name: Cache
+        uses: actions/cache@v2.1.7
+        if: ${{ !env.ACT }}
+        with:
+          path: ergogen/node_modules
+          key: ${{ runner.os }}-${{ hashFiles('ergogen/package-lock.json') }}
+          restore-keys: ${{ runner.os }}
+                    
+      - name: Setup dhall
+        uses: dhall-lang/setup-dhall@v4
+        
+      - name: Environment Preparation
+        run: |
+          mkdir -p output
+          cd ergogen
+          npm i
+
+      - name: Create ergogen config
+        run: bin/dhall-to-yaml --explain --file variants/${{ env.ANNA_VARIANT }}.dhall --output output/${{ env.ANNA_VARIANT }}.yaml
+
+      - name: Archive (Ergogen Config)
+        if: ${{ !env.ACT }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.ANNA_VARIANT }}
+          path: output/${{ env.ANNA_VARIANT }}.yaml
+      
+      - name: Run ergogen
+        run: |
+          cd ergogen
+          node src/cli.js -o ../output ../output/${{ env.ANNA_VARIANT }}.yaml
+          cd ..
+          cp output/pcbs/${{ env.ANNA_VARIANT }}.kicad_pcb ${{ env.ANNA_VARIANT }}_ergogen.kicad_pcb
+
+      - name: Archive (Ergogen PCB)
+        if: ${{ !env.ACT }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.ANNA_VARIANT }}
+          path: ${{ env.ANNA_VARIANT }}_ergogen.kicad_pcb
+
+      - name: Export DSN file
+        run: |
+          chmod +x bin/export_dsn.py
+          ./bin/export_dsn.py ${{ env.ANNA_VARIANT }}
+
+      - name: Archive (DSN file)
+        if: ${{ !env.ACT }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.ANNA_VARIANT }}
+          path: output/pcbs/${{ env.ANNA_VARIANT }}.dsn
+
+      - name: Autorouting
+        run: |
+          wget -O freerouting.jar https://github.com/freerouting/freerouting/releases/download/v1.4.5/freerouting-1.4.5.jar
+          cp freerouting.rules output/pcbs/${{ env.ANNA_VARIANT }}.rules
+          chmod +x bin/freerouting.py
+          ./bin/freerouting.py ${{ env.ANNA_VARIANT }}
+
+      - name: Archive (SES file)
+        if: ${{ !env.ACT }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.ANNA_VARIANT }}
+          path: output/pcbs/${{ env.ANNA_VARIANT }}.ses
+
+      - name: Prepare kicad gerber export
+        run: |
+          mkdir -p ~/.kicad/scripting/plugins
+          cd ~/.kicad/scripting/plugins
+          git clone https://github.com/asukiaaa/gerber_to_order.git
+
+      - name: Gerber Export
+        run: |
+          chmod +x bin/import_dsn.py
+          ./bin/import_dsn.py ${{ env.ANNA_VARIANT }}
+
+      - name: Archive (PCB)
+        if: ${{ !env.ACT }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.ANNA_VARIANT }}
+          path: output/pcbs/gerber_to_order/*.zip
+
+      - name: Archive (Gerber)
+        if: ${{ !env.ACT }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.ANNA_VARIANT }}
+          path: output/pcbs/${{ env.ANNA_VARIANT }}.kicad_pcb
+
+      - name: Archive (Previews)
+        if: ${{ !env.ACT }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.ANNA_VARIANT }}
+          path: "*.png"
+
+      - name: Archive (Videos)
+        if: ${{ github.branch != 'main' && !env.ACT }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.ANNA_VARIANT }}_videos
+          path: "*.ogv"

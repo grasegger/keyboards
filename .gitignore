@@ -152,3 +152,10 @@ $RECYCLE.BIN/
 # End of https://www.toptal.com/developers/gitignore/api/emacs,macos,vim,windows,visualstudiocode
 *.log
 freerouting.jar
+
+
+bin/*dhall
+bin/dhall*
+share/
+workflow/
+*.ogv
