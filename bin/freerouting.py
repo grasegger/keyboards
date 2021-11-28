@@ -126,7 +126,7 @@ def export_bom(target):
         with PopenContext([ "java", "-jar", "freerouting.jar", "-de", "output/pcbs/" + target + ".dsn", "-dr", "output/pcbs/" + target + ".rules", "-do output/pcbs/" + target + ".ses"
             ], close_fds=True) as freerouting_proc:
             wait_for_window_class('freerouting', '.*freerouting.*')
-            sleep(20)
+            time.sleep(20)
             xdotool(['mousemove', '760', '60'])
             xdotool(['click', '1'])
             wait_for_window_gone('freerouting','Freerouter .*', timeout=300)
