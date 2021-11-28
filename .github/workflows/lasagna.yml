@@ -26,15 +26,13 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Setup python
+        if: ${{ !env.ACT }}
         uses: actions/setup-python@v2
         with:
           python-version: '3.x'
 
-      - name: Prepare ACT env
-        if: ${{ env.ACT }}
-        run: apt install -y sudo
-
       - name: Global packages we need
+        if: ${{ !env.ACT }}
         run: |
           pip install PcbDraw kikit xvfbwrapper
           sudo apt -qq update
@@ -83,6 +81,7 @@ jobs:
           path: ${{ env.ANNA_VARIANT }}_ergogen.kicad_pcb
 
       - name: Export DSN file
+        if: ${{ !env.ACT }}
         run: |
           chmod +x bin/export_dsn.py
           ./bin/export_dsn.py ${{ env.ANNA_VARIANT }}
@@ -95,6 +94,7 @@ jobs:
           path: output/pcbs/${{ env.ANNA_VARIANT }}.dsn
 
       - name: Autorouting
+        if: ${{ !env.ACT }}
         run: |
           wget -O freerouting.jar https://github.com/freerouting/freerouting/releases/download/v1.4.5/freerouting-1.4.5.jar
           cp freerouting.rules output/pcbs/${{ env.ANNA_VARIANT }}.rules
@@ -109,12 +109,14 @@ jobs:
           path: output/pcbs/${{ env.ANNA_VARIANT }}.ses
 
       - name: Prepare kicad gerber export
+        if: ${{ !env.ACT }}
         run: |
           mkdir -p ~/.kicad/scripting/plugins
           cd ~/.kicad/scripting/plugins
           git clone https://github.com/asukiaaa/gerber_to_order.git
 
       - name: Gerber Export
+        if: ${{ !env.ACT }}
         run: |
           chmod +x bin/import_dsn.py
           ./bin/import_dsn.py ${{ env.ANNA_VARIANT }}
