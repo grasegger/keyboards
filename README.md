@@ -18,7 +18,7 @@ Nothing in here should be used yet. You have been warned.
 
 ## How to build
 
-Either use the github action and its artifacts or install [act](https://github.com/nektos/act) and run `akt -b` in the repository root.
+Either use the github action and its artifacts **or** install [act](https://github.com/nektos/act) and run `akt -b` in the repository root.
 
 ## Previews
 
