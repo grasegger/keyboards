@@ -106,7 +106,7 @@ jobs:
 
 
       - name: Gerber
-        run: 
+        run: |
           mkdir -p ~/.kicad/scripting/plugins
           cd ~/.kicad/scripting/plugins
           git clone https://github.com/asukiaaa/gerber_to_order.git
