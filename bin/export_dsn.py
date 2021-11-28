@@ -95,7 +95,7 @@ def export_bom(target):
     schematic_file = os.path.join(electronics_root, 'output/pcbs/' + target + '.kicad_pcb')
     output_dir = electronics_root
 
-    screencast_output_file = os.path.join(output_dir, 'screencast.ogv')
+    screencast_output_file = os.path.join(output_dir, 'dsn.ogv')
 
     with recorded_xvfb(screencast_output_file, width=800, height=600, colordepth=24):
         with PopenContext(['pcbnew', schematic_file], close_fds=True) as eeschema_proc:

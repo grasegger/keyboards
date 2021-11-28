@@ -81,10 +81,10 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: ${{ env.ANNA_VARIANT }}
-          path: output/${{ env.ANNA_VARIANT }}.dsn
+          path: output/pcbs/${{ env.ANNA_VARIANT }}.dsn
 
       - name: Archive (Videos)
         uses: actions/upload-artifact@v2
         with:
           name: ${{ env.ANNA_VARIANT }}
-          path: "*.ogv"
+          path: dsn.ogv
