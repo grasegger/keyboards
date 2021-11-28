@@ -74,7 +74,7 @@ jobs:
           cd ..
           cp output/pcbs/${{ env.ANNA_VARIANT }}.kicad_pcb ${{ env.ANNA_VARIANT }}_ergogen.pcb
 
-          - name: Archive (Ergogen PCB)
+      - name: Archive (Ergogen PCB)
         uses: actions/upload-artifact@v2
         with:
           name: ${{ env.ANNA_VARIANT }}
