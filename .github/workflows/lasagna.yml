@@ -29,8 +29,7 @@ jobs:
         with:
           path: ergogen/node_modules
           key: ${{ runner.os }}-${{ hashFiles('ergogen/package-lock.json') }}
-          restore-keys:
-            - ${{ runner.os }}-
+          restore-keys: ${{ runner.os }}
 
       - name: Check dhall is installed
         id: dhall
