@@ -62,6 +62,7 @@ jobs:
         run: bin/dhall-to-yaml --explain --file variants/${{ env.ANNA_VARIANT }}.dhall --output output/${{ env.ANNA_VARIANT }}.yaml
 
       - name: Archive (Ergogen Config)
+        if: ${{ !env.ACT }}
         uses: actions/upload-artifact@v2
         with:
           name: ${{ env.ANNA_VARIANT }}
