@@ -117,18 +117,21 @@ jobs:
           ./bin/import_dsn.py ${{ env.ANNA_VARIANT }}
 
       - name: Archive (Videos)
+        if: ${{ github.branch != 'main' }}
         uses: actions/upload-artifact@v2
         with:
           name: ${{ env.ANNA_VARIANT }}_videos
           path: dsn.ogv
 
       - name: Archive (Videos)
+        if: ${{ github.branch != 'main' }}
         uses: actions/upload-artifact@v2
         with:
           name: ${{ env.ANNA_VARIANT }}_videos
           path: freerouting.ogv
 
       - name: Archive (Videos)
+        if: ${{ github.branch != 'main' }}
         uses: actions/upload-artifact@v2
         with:
           name: ${{ env.ANNA_VARIANT }}_videos
