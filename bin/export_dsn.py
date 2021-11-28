@@ -144,6 +144,7 @@ def eeschema_export_bom(output_directory):
     xdotool(['key', 'ctrl+q'])
     wait_for_window_gone("pcbnew", "Pcbnew")
     logger.info('Wait before shutdown')
+    time.sleep(5)
 
 def export_bom(target):
     schematic_file = os.path.join(electronics_root, 'output/pcbs/' + target + '.kicad_pcb')
