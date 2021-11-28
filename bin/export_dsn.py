@@ -47,7 +47,7 @@ def wait_for_window_class(name, window_regex, timeout=30, focus=True):
         except subprocess.CalledProcessError:
             pass
         time.sleep(DELAY)
-    raise RuntimeError('Timed out waiting for %s window' % name)
+
 
 def wait_for_window_gone(name, window_regex, timeout=60, focus=True):
     DELAY = 0.5
@@ -65,7 +65,7 @@ def wait_for_window_gone(name, window_regex, timeout=60, focus=True):
         except subprocess.CalledProcessError:
             return
         time.sleep(DELAY)
-    raise RuntimeError('Timed out waiting for %s window to be gone' % name)
+
 
 def wait_for_window(name, window_regex, timeout=30, focus=True):
     DELAY = 0.5
@@ -83,7 +83,7 @@ def wait_for_window(name, window_regex, timeout=30, focus=True):
         except subprocess.CalledProcessError:
             pass
         time.sleep(DELAY)
-    raise RuntimeError('Timed out waiting for %s window' % name)
+
 
 class PopenContext(subprocess.Popen):
     def __enter__(self):
