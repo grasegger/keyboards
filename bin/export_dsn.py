@@ -30,6 +30,61 @@ sys.path.append(repo_root)
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
+
+def wait_for_window_class(name, window_regex, timeout=30, focus=True):
+    DELAY = 0.5
+    logger.info('Waiting for %s window...', name)
+    xdotool_command = ['search', '--onlyvisible', '--class', window_regex]
+    if focus:
+        xdotool_command.append('windowfocus')
+
+    for i in range(int(timeout/DELAY)):
+        try:
+            window_id = xdotool(xdotool_command).strip()
+            logger.info('Found %s window', name)
+            logger.debug('Window id: %s', window_id)
+            return window_id
+        except subprocess.CalledProcessError:
+            pass
+        time.sleep(DELAY)
+    raise RuntimeError('Timed out waiting for %s window' % name)
+
+def wait_for_window_gone(name, window_regex, timeout=60, focus=True):
+    DELAY = 0.5
+    logger.info('Waiting for %s window...', name)
+    xdotool_command = ['search', '--onlyvisible', '--name', window_regex]
+    if focus:
+        xdotool_command.append('windowfocus')
+
+    for i in range(int(timeout/DELAY)):
+        try:
+            window_id = xdotool(xdotool_command).strip()
+            logger.info('Found %s window', name)
+            logger.debug('Window id: %s', window_id)
+            pass
+        except subprocess.CalledProcessError:
+            return
+        time.sleep(DELAY)
+    raise RuntimeError('Timed out waiting for %s window' % name)
+
+def wait_for_window(name, window_regex, timeout=30, focus=True):
+    DELAY = 0.5
+    logger.info('Waiting for %s window...', name)
+    xdotool_command = ['search', '--onlyvisible', '--name', window_regex]
+    if focus:
+        xdotool_command.append('windowfocus')
+
+    for i in range(int(timeout/DELAY)):
+        try:
+            window_id = xdotool(xdotool_command).strip()
+            logger.info('Found %s window', name)
+            logger.debug('Window id: %s', window_id)
+            return window_id
+        except subprocess.CalledProcessError:
+            pass
+        time.sleep(DELAY)
+    raise RuntimeError('Timed out waiting for %s window' % name)
+
 class PopenContext(subprocess.Popen):
     def __enter__(self):
         return self
@@ -61,13 +116,13 @@ def xdotool(command):
     return subprocess.check_output(['xdotool'] + command)
 
 def eeschema_export_bom(output_directory):
-    time.sleep(5)
+    wait_for_window_class("pcbnew", "pcbnew")
     xdotool(['mousemove', '600', '430'])
     xdotool(['click', '1'])
-    time.sleep(3)
+    wait_for_window_class("pcbnew", "pcbnew")
     xdotool(['mousemove', '180', '180'])
     xdotool(['click', '1'])
-    time.sleep(3)
+    wait_for_window("pcbnew", "Pcbnew")
     xdotool(['mousemove', '24', '24'])
     xdotool(['click', '1'])
     xdotool(['key', 'ctrl+s'])
@@ -82,20 +137,13 @@ def eeschema_export_bom(output_directory):
     xdotool(['key', 'Down'])
     xdotool(['key', 'Down'])
     xdotool(['key', 'Right'])
-    time.sleep(5)
     xdotool(['key', 'Return'])
-    time.sleep(5)
+    wait_for_window("pcbnew", "Specctra.*")
     xdotool(['key', 'Return'])
-    time.sleep(5)
+    wait_for_window_gone("pcbnew", "Specctra.*")
+    wait_for_window_gone("pcbnew", "Pcbnew")
     xdotool(['key', 'ctrl+q'])
     logger.info('Wait before shutdown')
-    time.sleep(1)
-    xdotool(['key', 'ctrl+q'])
-    time.sleep(1)
-    xdotool(['key', 'ctrl+q'])
-    time.sleep(1)
-    xdotool(['key', 'ctrl+q'])
-    time.sleep(5)
 
 def export_bom(target):
     schematic_file = os.path.join(electronics_root, 'output/pcbs/' + target + '.kicad_pcb')
