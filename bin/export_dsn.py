@@ -62,6 +62,9 @@ def xdotool(command):
 
 def eeschema_export_bom(output_directory):
     time.sleep(5)
+    xdotool(['mousemove', '600', '430'])
+    xdotool(['click', '1'])
+    time.sleep(5)
     xdotool(['mousemove', '24', '24'])
     xdotool(['click', '1'])
     xdotool(['key', 'ctrl+s'])
