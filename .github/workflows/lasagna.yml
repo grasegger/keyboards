@@ -75,6 +75,7 @@ jobs:
           cp output/pcbs/${{ env.ANNA_VARIANT }}.kicad_pcb ${{ env.ANNA_VARIANT }}_ergogen.kicad_pcb
 
       - name: Archive (Ergogen PCB)
+        if: ${{ !env.ACT }}
         uses: actions/upload-artifact@v2
         with:
           name: ${{ env.ANNA_VARIANT }}
@@ -86,6 +87,7 @@ jobs:
           ./bin/export_dsn.py ${{ env.ANNA_VARIANT }}
 
       - name: Archive (DSN file)
+        if: ${{ !env.ACT }}
         uses: actions/upload-artifact@v2
         with:
           name: ${{ env.ANNA_VARIANT }}
@@ -99,6 +101,7 @@ jobs:
           ./bin/freerouting.py ${{ env.ANNA_VARIANT }}
 
       - name: Archive (SES file)
+        if: ${{ !env.ACT }}
         uses: actions/upload-artifact@v2
         with:
           name: ${{ env.ANNA_VARIANT }}
@@ -117,21 +120,21 @@ jobs:
           ./bin/import_dsn.py ${{ env.ANNA_VARIANT }}
 
       - name: Archive (Videos)
-        if: ${{ github.branch != 'main' }}
+        if: ${{ github.branch != 'main' && !env.ACT }}
         uses: actions/upload-artifact@v2
         with:
           name: ${{ env.ANNA_VARIANT }}_videos
           path: dsn.ogv
 
       - name: Archive (Videos)
-        if: ${{ github.branch != 'main' }}
+        if: ${{ github.branch != 'main' && !env.ACT }}
         uses: actions/upload-artifact@v2
         with:
           name: ${{ env.ANNA_VARIANT }}_videos
           path: freerouting.ogv
 
       - name: Archive (Videos)
-        if: ${{ github.branch != 'main' }}
+        if: ${{ github.branch != 'main' && !env.ACT }}
         uses: actions/upload-artifact@v2
         with:
           name: ${{ env.ANNA_VARIANT }}_videos

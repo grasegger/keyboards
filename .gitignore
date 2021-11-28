@@ -158,3 +158,4 @@ bin/*dhall
 bin/dhall*
 share/
 workflow/
+*.ogv

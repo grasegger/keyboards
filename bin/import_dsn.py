@@ -152,7 +152,7 @@ def eeschema_export_bom(output_directory):
     xdotool(['key', 'Down'])
     xdotool(['key', 'Right'])
     xdotool(['key', 'Down'])
-#    xdotool(['key', 'Return'])
+    xdotool(['key', 'Return'])
     time.sleep(1)
     xdotool(['key', 'ctrl+q'])
     wait_for_window_gone("pcbnew", "Pcbnew")
