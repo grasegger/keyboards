@@ -18,10 +18,22 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Setup node without cache
+      - name: Setup node
         uses: actions/setup-node@v2
         with:
           node-version: ${{ env.NODE_VERSION }}
+
+      - name: Setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Global packages we need
+        run: |
+          pip install PcbDraw kikit
+          apt update
+          apt install -y kicad openjdk-8-jre kicad-libraries zip inkscape make git libmagickwand-dev inkscape libgraphicsmagick1-dev libmagickcore-dev openscad
+
 
       - name: Cache
         uses: actions/cache@v2.1.7
