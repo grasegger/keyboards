@@ -122,7 +122,7 @@ def export_bom(target):
 
     screencast_output_file = os.path.join(output_dir, 'freerouting.ogv')
 
-    with recorded_xvfb(screencast_output_file, width=1920, height=1080, colordepth=24):
+    with recorded_xvfb(screencast_output_file, width=800, height=600, colordepth=24):
         with PopenContext([ "java", "-jar", "freerouting.jar",
             "-de", "output/pcbs/" + target + ".dsn", 
             "-dr", "output/pcbs/" + target + ".rules", 
