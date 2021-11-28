@@ -77,6 +77,12 @@ jobs:
           chmod +x bin/export_dsn.py
           ./bin/export_dsn.py ${{ env.ANNA_VARIANT }}
 
+      - name: Autorouting
+        run: |
+          wget -O freerouting.jar https://github.com/freerouting/freerouting/releases/download/v1.4.5/freerouting-1.4.5.jar
+          chmod +x bin/freerouting.py
+          ./bin/freerouting.py ${{ env.ANNA_VARIANT }}
+
       - name: Archive (DSN file)
         uses: actions/upload-artifact@v2
         with:
@@ -88,3 +94,9 @@ jobs:
         with:
           name: ${{ env.ANNA_VARIANT }}
           path: dsn.ogv
+
+      - name: Archive (Videos)
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.ANNA_VARIANT }}
+          path: freerouting.ogv
