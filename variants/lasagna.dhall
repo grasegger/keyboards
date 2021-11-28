@@ -110,7 +110,7 @@ let columns =
         , rotate = 330
         , spread = 24.5
         , rows = Rows::{
-          , home = Key::{ column_net = "P09", bind = [ 2.2, 2.2 ] }
+          , home = Key::{ column_net = "P9", bind = [ 2.2, 2.2 ] }
           }
         }
       }

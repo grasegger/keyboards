@@ -45,6 +45,7 @@ output/pcbs/lasagna.ses: freerouting.jar output/pcbs/lasagna.kicad_pcb output/pc
 	java -jar freerouting.jar -de output/pcbs/lasagna.dsn -dr output/pcbs/lasagna.rules -do output/pcbs/lasagna.ses
 	rm output/pcbs/*.bin
 	rm output/pcbs/*.rules
+	rm -f logs || true
 
 output/pcbs/lasagna.dsn: docker-image
 	docker run --rm -v $(shell pwd):/src -it anna-keebs:local export_dsn.py lasagna
