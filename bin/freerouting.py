@@ -125,7 +125,8 @@ def export_bom(target):
     with recorded_xvfb(screencast_output_file, width=1920, height=1080, colordepth=24):
         with PopenContext([ "java", "-jar", "freerouting.jar", "-de", "output/pcbs/" + target + ".dsn", "-dr", "output/pcbs/" + target + ".rules", "-do output/pcbs/" + target + ".ses"
             ], close_fds=True) as freerouting_proc:
-            wait_for_window('freerouting', 'Board Layout')
+            wait_for_window('freerouting', 'Board Layout', timeout=300)
+            time.sleep(3)
             xdotool(['mousemove', '760', '60'])
             xdotool(['click', '1'])
             wait_for_window_gone('freerouting','Board Layout', timeout=300)
