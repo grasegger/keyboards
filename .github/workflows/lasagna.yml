@@ -107,7 +107,6 @@ jobs:
           name: ${{ env.ANNA_VARIANT }}
           path: output/pcbs/${{ env.ANNA_VARIANT }}.ses
 
-
       - name: Prepare kicad gerber export
         run: |
           mkdir -p ~/.kicad/scripting/plugins
@@ -118,6 +117,21 @@ jobs:
         run: |
           chmod +x bin/import_dsn.py
           ./bin/import_dsn.py ${{ env.ANNA_VARIANT }}
+
+      - name: Archive (PCB)
+        if: ${{ !env.ACT }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.ANNA_VARIANT }}
+          path: output/pcbs/gerber_to_order/*.zip
+
+      - name: Archive (Gerber)
+        if: ${{ !env.ACT }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.ANNA_VARIANT }}
+          path: output/pcbs/${{ env.ANNA_VARIANT }}.kicad_pcb
+
 
       - name: Archive (Videos)
         if: ${{ github.branch != 'main' && !env.ACT }}
