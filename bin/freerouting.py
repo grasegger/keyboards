@@ -127,6 +127,7 @@ def export_bom(target):
             "-de", "output/pcbs/" + target + ".dsn", 
             "-dr", "output/pcbs/" + target + ".rules", 
             "-do", "output/pcbs/" + target + ".ses", 
+            "-mp", "1000"
             ], close_fds=True) as freerouting_proc:
             wait_for_window('freerouting', 'Board Layout', timeout=300)
             time.sleep(3)
