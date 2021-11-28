@@ -30,15 +30,8 @@ jobs:
           path: ergogen/node_modules
           key: ${{ runner.os }}-${{ hashFiles('ergogen/package-lock.json') }}
           restore-keys: ${{ runner.os }}
-
-      - name: Check dhall is installed
-        id: dhall
-        uses: andstor/file-existence-action@v1
-        with:
-          files: "bin/dhall"
                     
-      - name: Setup dhall if it is not installed
-        if: steps.dhall.outputs.file_exists == 'false'
+      - name: Setup dhall
         uses: dhall-lang/setup-dhall@v4
         
       - name: Environment Preparation
