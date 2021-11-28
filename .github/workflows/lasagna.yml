@@ -146,11 +146,11 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: ${{ env.ANNA_VARIANT }}
-          path: *.png
+          path: "*.png"
 
       - name: Archive (Videos)
         if: ${{ github.branch != 'main' && !env.ACT }}
         uses: actions/upload-artifact@v2
         with:
           name: ${{ env.ANNA_VARIANT }}_videos
-          path: *.ogv
+          path: "*.ogv"
