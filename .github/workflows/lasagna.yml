@@ -27,8 +27,7 @@ jobs:
         uses: actions/cache@v2.1.7
         if: ${{ !env.ACT }}
         with:
-          path:
-            - ergogen/node_modules
+          path: ergogen/node_modules
           key: ${{ runner.os }}-${{ hashFiles('ergogen/package-lock.json') }}
           restore-keys:
             - ${{ runner.os }}-
