@@ -80,7 +80,7 @@ jobs:
       - name: Autorouting
         run: |
           wget -O freerouting.jar https://github.com/freerouting/freerouting/releases/download/v1.4.5/freerouting-1.4.5.jar
-          cp freerouting.rules output/pcbs/lasagna.rules
+          cp freerouting.rules output/pcbs/${{ env.ANNA_VARIANT }}.rules
           chmod +x bin/freerouting.py
           ./bin/freerouting.py ${{ env.ANNA_VARIANT }}
 
