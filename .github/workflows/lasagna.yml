@@ -11,6 +11,7 @@ jobs:
     env:
       NODE_VERSION: 16
       DEBIAN_FRONTEND: noninteractive
+      ANNA_VARIANT: lasagna
     runs-on: ubuntu-latest
 
     steps:
@@ -58,15 +59,15 @@ jobs:
           npm i
 
       - name: Create ergogen config
-        run: bin/dhall-to-yaml --explain --file variants/lasagna.dhall --output output/lasagna.yaml
+        run: bin/dhall-to-yaml --explain --file variants/${{ ANNA_VARIANT }}.dhall --output output/${{ ANNA_VARIANT }}.yaml
 
       - name: Archive (Ergogen Config)
         uses: actions/upload-artifact@v2
         with:
-          name: lasagna
-          path: output/lasagna.yaml
+          name: ${{ ANNA_VARIANT }}
+          path: output/${{ ANNA_VARIANT }}.yaml
       
       - name: Run ergogen
         run: |
           cd ergogen
-          node src/cli.js -o ../output ../output/lasagna.yaml
+          node src/cli.js -o ../output ../output/${{ ANNA_VARIANT }}.yaml
