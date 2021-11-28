@@ -28,11 +28,15 @@ jobs:
         with:
           python-version: '3.x'
 
+      - name: Prepare ACT env
+        if: ${{ env.ACT }}
+        run: apt install -y sudo
+
       - name: Global packages we need
         run: |
           pip install PcbDraw kikit
-          apt update
-          apt install -y kicad openjdk-8-jre kicad-libraries zip inkscape make git libmagickwand-dev inkscape libgraphicsmagick1-dev libmagickcore-dev openscad
+          sudo apt update
+          sudo apt install -y kicad openjdk-8-jre kicad-libraries zip inkscape make git libmagickwand-dev inkscape libgraphicsmagick1-dev libmagickcore-dev openscad
 
 
       - name: Cache
