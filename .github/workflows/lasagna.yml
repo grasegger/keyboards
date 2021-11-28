@@ -39,7 +39,7 @@ jobs:
           pip install PcbDraw kikit xvfbwrapper
           sudo apt -qq update
           sudo apt -qq install -y --no-install-recommends kicad openjdk-8-jre kicad-libraries zip inkscape make git libmagickwand-dev inkscape libgraphicsmagick1-dev libmagickcore-dev openscad
-          sudo apt -qq install -y recordmydesktop xvfb
+          sudo apt -qq install -y recordmydesktop xvfb xdotool
 
       - name: Cache
         uses: actions/cache@v2.1.7
