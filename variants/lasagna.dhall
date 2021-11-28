@@ -174,7 +174,7 @@ let battery_connector_right =
 
 let mcu_anchor = Anchor::{ rotate = -90, shift = [ 78.0, 23.5 ] }
 
-let mcu_left = { type = "promicro", anchor = mcu_anchor }
+let mcu_left = { type = "promicro", anchor = mcu_anchor, params = {orientation = "up"} }
 
 let mcu_right =
       { type = "promicro"
