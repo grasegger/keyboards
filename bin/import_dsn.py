@@ -154,7 +154,7 @@ def eeschema_export_bom(output_directory):
     xdotool(['key', 'Down'])
 #    xdotool(['key', 'Return'])
     time.sleep(1)
-    xdotool(['key', 'ctrl+q'])
+#    xdotool(['key', 'ctrl+q'])
     logger.info('Wait before shutdown')
     time.sleep(5)
 
