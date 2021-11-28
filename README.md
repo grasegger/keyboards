@@ -23,4 +23,4 @@ Either use the github action and its artifacts **or** install [act](https://gith
 ## Previews
 
 ### Lasagna
-![](./previews/lasanga_board.png)
+![](./previews/lasagna_board.png)

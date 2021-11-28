@@ -133,13 +133,6 @@ jobs:
           name: ${{ env.ANNA_VARIANT }}
           path: output/pcbs/${{ env.ANNA_VARIANT }}.kicad_pcb
 
-      - name: Previews
-        run: pcbdraw --style builtin:jlcpcb-green-hasl.json output/pcbs/lasagna.kicad_pcb ${{ env.ANNA_VARIANT }}_board_front.png
-      - run: pcbdraw --back --style builtin:jlcpcb-green-hasl.json output/pcbs/lasagna.kicad_pcb ${{ env.ANNA_VARIANT }}_board_back.png
-      - run: cd previews; mogrify -bordercolor transparent -border 20 -format png ${{ env.ANNA_VARIANT }}_board_*.png
-      - run: cd previews; montage -geometry +0+0 -tile 1×2 ${{ env.ANNA_VARIANT }}_board_front.png ${{ env.ANNA_VARIANT }}_board_back.png ${{ env.ANNA_VARIANT }}_board.png
-      - run: rm previews/${{ env.ANNA_VARIANT }}_board_*.png 
-
       - name: Archive (Previews)
         if: ${{ !env.ACT }}
         uses: actions/upload-artifact@v2
