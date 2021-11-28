@@ -105,14 +105,17 @@ jobs:
           path: output/pcbs/${{ env.ANNA_VARIANT }}.ses
 
 
-      - name: Gerber
+      - name: Prepare kicad gerber export
         run: |
           mkdir -p ~/.kicad/scripting/plugins
           cd ~/.kicad/scripting/plugins
           git clone https://github.com/asukiaaa/gerber_to_order.git
+
+      - name: Gerber Export
+        run: |
+          chmod +x bin/import_dsn.py
           ./bin/import_dsn.py ${{ env.ANNA_VARIANT }}
-
-
+          
       - name: Archive (Videos)
         uses: actions/upload-artifact@v2
         with:
