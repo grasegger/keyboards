@@ -71,11 +71,25 @@ jobs:
         run: |
           cd ergogen
           node src/cli.js -o ../output ../output/${{ env.ANNA_VARIANT }}.yaml
+          cd ..
+          cp output/pcbs/${{ env.ANNA_VARIANT }}.kicad_pcb ${{ env.ANNA_VARIANT }}_ergogen.pcb
+
+          - name: Archive (Ergogen PCB)
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.ANNA_VARIANT }}
+          path: ${{ env.ANNA_VARIANT }}_ergogen.pcb
 
       - name: Export DSN file
         run: |
           chmod +x bin/export_dsn.py
           ./bin/export_dsn.py ${{ env.ANNA_VARIANT }}
+
+      - name: Archive (DSN file)
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.ANNA_VARIANT }}
+          path: output/pcbs/${{ env.ANNA_VARIANT }}.dsn
 
       - name: Autorouting
         run: |
@@ -84,11 +98,11 @@ jobs:
           chmod +x bin/freerouting.py
           ./bin/freerouting.py ${{ env.ANNA_VARIANT }}
 
-      - name: Archive (DSN file)
+      - name: Archive (SES file)
         uses: actions/upload-artifact@v2
         with:
           name: ${{ env.ANNA_VARIANT }}
-          path: output/pcbs/${{ env.ANNA_VARIANT }}.dsn
+          path: output/pcbs/${{ env.ANNA_VARIANT }}.ses
 
       - name: Archive (Videos)
         uses: actions/upload-artifact@v2

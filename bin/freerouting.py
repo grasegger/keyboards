@@ -130,9 +130,6 @@ def export_bom(target):
             "-mp", "1000"
             ], close_fds=True) as freerouting_proc:
             wait_for_window('freerouting', 'Board Layout', timeout=300)
-            time.sleep(3)
-            xdotool(['mousemove', '760', '60'])
-            xdotool(['click', '1'])
             wait_for_window_gone('freerouting','Board Layout', timeout=300)
             freerouting_proc.terminate()
 
