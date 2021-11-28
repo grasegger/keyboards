@@ -51,7 +51,7 @@ def wait_for_window_class(name, window_regex, timeout=30, focus=True):
 
 def wait_for_window_gone(name, window_regex, timeout=60, focus=True):
     DELAY = 0.5
-    logger.info('Waiting for %s window...', name)
+    logger.info('Waiting for %s window to be gone...', name)
     xdotool_command = ['search', '--onlyvisible', '--name', window_regex]
     if focus:
         xdotool_command.append('windowfocus')
@@ -65,7 +65,7 @@ def wait_for_window_gone(name, window_regex, timeout=60, focus=True):
         except subprocess.CalledProcessError:
             return
         time.sleep(DELAY)
-    raise RuntimeError('Timed out waiting for %s window' % name)
+    raise RuntimeError('Timed out waiting for %s window to be gone' % name)
 
 def wait_for_window(name, window_regex, timeout=30, focus=True):
     DELAY = 0.5
@@ -141,8 +141,8 @@ def eeschema_export_bom(output_directory):
     wait_for_window("pcbnew", "Specctra.*")
     xdotool(['key', 'Return'])
     wait_for_window_gone("pcbnew", "Specctra.*")
-    wait_for_window_gone("pcbnew", "Pcbnew")
     xdotool(['key', 'ctrl+q'])
+    wait_for_window_gone("pcbnew", "Pcbnew")
     logger.info('Wait before shutdown')
 
 def export_bom(target):
