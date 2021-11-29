@@ -51,7 +51,7 @@ jobs:
       - name: Install packages we need
         if: ${{ !env.ACT }}
         run: |
-          pip install xvfbwrapper PcbDraw
+          pip install xvfbwrapper
           sudo apt-get -qq update
           sudo apt-get -qq install -y kicad kicad-libraries zip inkscape make git libmagickwand-dev inkscape libgraphicsmagick1-dev libmagickcore-dev openscad recordmydesktop xvfb xdotool
 
@@ -66,9 +66,6 @@ jobs:
 
       - name: Create ergogen config
         run: bin/dhall-to-yaml --explain --file variants/${{ matrix.keeb}}.dhall --output output/${{ matrix.keeb}}.yaml
-
-        
-      - run: pcbdraw --style builtin:jlcpcb-green-hasl.json output/pcbs/lasagna.kicad_pcb lasagna_board_front.png
 
       - name: Archive (Ergogen Config)
         if: ${{ !env.ACT }}
@@ -145,13 +142,6 @@ jobs:
         with:
           name: ${{ matrix.keeb}}
           path: output/pcbs/${{ matrix.keeb}}.kicad_pcb
-
-      - name: Archive (Previews)
-        if: ${{ !env.ACT }}
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ matrix.keeb}}
-          path: "*.png"
 
       - name: Archive (Videos)
         if: ${{ github.branch != 'main' && !env.ACT }}
