@@ -59,7 +59,7 @@ jobs:
 
       - uses: awalsh128/cache-apt-pkgs-action@v1
         with:
-          packages:  kicad kicad-libraries zip inkscape make git  imagemagick openscad recordmydesktop xvfb xdotool
+          packages: kicad kicad-libraries zip inkscape make git imagemagick openscad recordmydesktop xvfb xdotool
           version: 1.0
 
       - name: Setup dhall
@@ -73,11 +73,6 @@ jobs:
 
       - name: Create ergogen config
         run: bin/dhall-to-yaml --explain --file variants/${{ env.ANNA_VARIANT }}.dhall --output output/${{ env.ANNA_VARIANT }}.yaml
-
-      - uses: mosteo-actions/docker-run@v1
-        with:
-          image: yaqwsx/kikit:nightly
-          command: uname -a
 
       - name: Archive (Ergogen Config)
         if: ${{ !env.ACT }}
@@ -140,6 +135,12 @@ jobs:
         run: |
           chmod +x bin/import_dsn.py
           ./bin/import_dsn.py ${{ env.ANNA_VARIANT }}
+        
+      - name: Generate pcb preview
+        uses: mosteo-actions/docker-run@v1
+        with:
+          image: yaqwsx/kikit:nightly
+          command: pcbdraw --style builtin:jlcpcb-green-hasl.json output/pcbs/lasagna.kicad_pcb lasagna_board_front.png
 
       - name: Archive (PCB)
         if: ${{ !env.ACT }}
