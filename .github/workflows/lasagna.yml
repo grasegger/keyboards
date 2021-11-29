@@ -61,8 +61,9 @@ jobs:
           sudo apt -qq install -y recordmydesktop xvfb xdotool
 
       - run: |
-          ls /usr/share/kicad
-          ls /usr/lib/kicad
+          sudo apt -qq install -y tree
+          tree /usr/share/kicad
+          exit 1
 
       - name: Setup dhall
         uses: dhall-lang/setup-dhall@v4
