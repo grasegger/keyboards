@@ -23,9 +23,7 @@ jobs:
       - name: User cache folder
         uses: actions/cache@v2
         with:
-          path: |
-            ~/cache
-            !~/cache/exclude
+          path: ~/cache
           key: ${{ runner.os }}-
 
       - name: Setup node
