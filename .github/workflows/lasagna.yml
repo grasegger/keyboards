@@ -46,9 +46,9 @@ jobs:
           sudo apt -qq install -y recordmydesktop xvfb xdotool
 
       - run: |
-          ls /usr/share
+          ls /usr/share/python3
           exit 1
-          
+
       - name: Cache
         uses: actions/cache@v2.1.7
         if: ${{ !env.ACT }}
