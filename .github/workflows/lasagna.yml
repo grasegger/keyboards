@@ -59,7 +59,7 @@ jobs:
 
       - uses: awalsh128/cache-apt-pkgs-action@v1
         with:
-          packages:  kicad kicad-libraries zip inkscape make git libmagickwand-dev inkscape libgraphicsmagick1-dev libmagickcore-dev openscad recordmydesktop xvfb xdotool
+          packages:  kicad kicad-libraries zip inkscape make git  imagemagick openscad recordmydesktop xvfb xdotool
           version: 1.0
 
       - name: Setup dhall
