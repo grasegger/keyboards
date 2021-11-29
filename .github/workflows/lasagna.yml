@@ -60,12 +60,6 @@ jobs:
           sudo apt -qq install -y --no-install-recommends kicad kicad-libraries zip inkscape make git libmagickwand-dev inkscape libgraphicsmagick1-dev libmagickcore-dev openscad
           sudo apt -qq install -y recordmydesktop xvfb xdotool
 
-      - run: |
-          pip cache dir
-          sudo apt -qq install -y tree
-          tree /usr/share/kicad
-          exit 1
-
       - name: Setup dhall
         uses: dhall-lang/setup-dhall@v4
         
@@ -77,6 +71,11 @@ jobs:
 
       - name: Create ergogen config
         run: bin/dhall-to-yaml --explain --file variants/${{ env.ANNA_VARIANT }}.dhall --output output/${{ env.ANNA_VARIANT }}.yaml
+
+      - run: |
+          pip cache dir
+          pcbdraw --style builtin:jlcpcb-green-hasl.json output/${{ env.ANNA_VARIANT }}.yaml ${{ env.ANNA_VARIANT }}.png
+          exit 1
 
       - name: Archive (Ergogen Config)
         if: ${{ !env.ACT }}
