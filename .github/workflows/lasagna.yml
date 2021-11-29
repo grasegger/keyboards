@@ -24,7 +24,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/cache
-          key: ${{ runner.os }}-
+          key: ${{ runner.os }}-${{ hashFiles('.github/workflows/*') }}
 
       - name: Setup node
         uses: actions/setup-node@v2
@@ -52,7 +52,7 @@ jobs:
           sudo apt -qq install -y recordmydesktop xvfb xdotool
 
       - run: |
-          ls /usr/share/python3
+          lfind / -type d -name "kicad"
           exit 1
 
       - name: Cache
