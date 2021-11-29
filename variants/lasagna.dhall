@@ -10,7 +10,7 @@ let minhalfu = -9.5
 
 let uu_border = 45.0
 
-let bottom_bind = 52.25
+let bottom_bind = 33.0
 
 let mirror_ref = "mirror_matrix_a_home"
 
@@ -92,21 +92,20 @@ let mkColumn = \(net_one: Text) -> \(net_two: Text) -> \(stagger: Double) ->
   in column
 
 let columns =
-      { a = mkColumn "P16" "RST" 0.0
+      { a = mkColumn "P10" "RST" 0.0
       , b = mkColumn "P14" "P2" halfu
       , c = Column::{
         , stagger = quarteru
         , rows = Rows::{
-          , home = Key::{ column_net = "P15" }
+          , home = Key::{ column_net = "P15", bind = [ 14.5, uu, bottom_bind, uu ] }
           , top = Some Key::{
-            , column_net = "P0"
-            , bind = [ 0.0, uu_border, bottom_bind, uu ]
+            , column_net = "P1"
             }
           }
         }
-      , d = mkColumn "P10" "P1" minhalfu
+      , d = mkColumn "P16" "P0" -8.0
       , e = Column::{
-        , stagger = -29.0
+        , stagger = -30.0
         , rotate = 330
         , spread = 24.5
         , rows = Rows::{
@@ -125,36 +124,30 @@ let outlines =
         { a_pcb_keys = [ keyEdgeCut::{=}, keyEdgeCut::{ side = "right" } ]
         , b_pcb =  {
           one = { type = "outline", name = "a_pcb_keys"}
-          , two = Rectangle::{size = [20.0, 5.0], anchor = Anchor::{shift=[-25.0, 32.0]}, operation = "add"}
+          , two = Rectangle::{size = [20.0, 5.0], anchor = Anchor::{shift=[-25.0, 30.0]}, operation = "add"}
           , three = Rectangle::{size = [20.0, 5.0], anchor = Anchor::{shift=[-25.0, -20.0]}, operation = "add"}
-          , vier = Rectangle::{size = [3.0, 10.0], anchor = Anchor::{shift=[90.5, -10.0]}}
-          , vierpeins = Rectangle::{size = [4.0, 10.0], anchor = Anchor::{shift=[94.4, -10.0], ref = mirror_ref}}
         }
         , c_final_pcb = {
           one = { type = "outline", name = "b_pcb", fillet = 1}
-          , two = Circle::{radius = 1.55, anchor = Anchor::{shift = [-6.5, 39.5]}}
+          , two = Circle::{radius = 1.55, anchor = Anchor::{shift = [-6.5, 34.5]}}
           , three = Circle::{radius = 1.55, anchor = Anchor::{shift = [-6.5, -25.5]}}
-          , vier = Circle::{radius = 1.55, anchor = Anchor::{shift = [89.5, 39.5]}}
-          , vierpeins = Circle::{radius = 1.55, anchor = Anchor::{shift = [89.5, 39.5], ref = mirror_ref}}
           , vierpzwei = Circle::{radius = 1.55, anchor = Anchor::{shift = [-6.5, -25.5], ref = mirror_ref}}
-          , vierpdrei = Circle::{radius = 1.55, anchor = Anchor::{shift = [-6.5, 39.5], ref = mirror_ref}}
-          , vierpvier = Circle::{radius = 1.55, anchor = Anchor::{shift = [71.0, -15.0], ref = mirror_ref}}
-          , vierpvierpp = Circle::{radius = 1.55, anchor = Anchor::{shift = [71.0, -15.0]}}
+          , vierpdrei = Circle::{radius = 1.55, anchor = Anchor::{shift = [-6.5, 34.5], ref = mirror_ref}}
         }
         }
       }
 
-let on_off_anchor = Anchor::{ shift = [ 88.5, -5.0 ], rotate = -90 }
+let on_off_anchor = Anchor::{ shift = [ 57.25, 36.2 ] }
 let on_off_left =
       { type = "slider"
       , anchor = on_off_anchor
-      , nets = { from = "BATPSWITCH", to = "RAW" }
+      , nets = { from = "RAW", to = "BATPSWITCH" }
       } 
 
 let on_off_right =
       { type = "slider"
-      , anchor = on_off_anchor // {ref = mirror_ref, rotate= -270}
-      , nets = { from = "MIRROR_BATPSWITCH", to = "MIRROR_RAW" }
+      , anchor = on_off_anchor // {ref = mirror_ref}
+      , nets = { from = "MIRROR_RAW", to = "MIRROR_BATPSWITCH" }
       }
 
 let battery_anchor =
@@ -172,7 +165,7 @@ let battery_connector_right =
           , nets = { pos = "MIRROR_BATPSWITCH", neg = "MIRROR_GND" }
           }
 
-let mcu_anchor = Anchor::{ rotate = -90, shift = [ 78.0, 23.5 ] }
+let mcu_anchor = Anchor::{ rotate = -90, shift = [ 75.75, 19.0] }
 
 let mcu_left = { type = "promicro", anchor = mcu_anchor, params = {orientation = "up"} }
 
@@ -182,7 +175,7 @@ let mcu_right =
       , params.mirror = True
       }
 
-let encoder_anchor = Anchor::{ rotate = -270, shift = [ 78.0, -1.0 ] }
+let encoder_anchor = Anchor::{ rotate = -180, shift = [ 75.0, -3.3 ] }
 
 let encoder_left =
       { type = "rotary"
@@ -223,7 +216,7 @@ let trackball_right =
             }
           }
 
-let puck_anchor = Anchor::{shift = [47.625, 3.0]}
+let puck_anchor = Anchor::{shift = [23.0, 10.0], rotate = Natural/toInteger 45}
 let puck_left = {
   type = "puck", 
   anchor = puck_anchor
@@ -239,7 +232,7 @@ let fake_ground_one = { type = "jstph"
       }
 
 let fake_ground_two = { type = "jstph"
-      , anchor = Anchor::{shift= [-14.0, 34.0]}
+      , anchor = Anchor::{shift= [-14.0, 32.0]}
       , nets = { pos = "MIRROR_GND", neg = "GND" }
       }
 
