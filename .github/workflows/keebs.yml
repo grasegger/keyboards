@@ -8,10 +8,12 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build:
+    strategy:
+      matrix:
+        keeb: [lasagna]
     env:
       NODE_VERSION: 16
       DEBIAN_FRONTEND: noninteractive
-      ANNA_VARIANT: lasagna
     runs-on: ubuntu-latest
 
     steps:
@@ -20,33 +22,39 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Setup node
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-
-      - name: Setup python
+      - name: User cache folder
         if: ${{ !env.ACT }}
-        uses: actions/setup-python@v2
+        uses: actions/cache@v2
         with:
-          python-version: '3.x'
+          path: /home/runner/.cache/pip
+          key: ${{ runner.os }}-${{ hashFiles('.github/workflows/*') }}
 
-      - name: Global packages we need
-        if: ${{ !env.ACT }}
-        run: |
-          pip install PcbDraw kikit xvfbwrapper
-          sudo apt -qq update
-          sudo apt -qq install -y --no-install-recommends kicad openjdk-11-jre kicad-libraries zip inkscape make git libmagickwand-dev inkscape libgraphicsmagick1-dev libmagickcore-dev openscad
-          sudo apt -qq install -y recordmydesktop xvfb xdotool
-
-      - name: Cache
+      - name: Cache node modules
         uses: actions/cache@v2.1.7
         if: ${{ !env.ACT }}
         with:
           path: ergogen/node_modules
           key: ${{ runner.os }}-${{ hashFiles('ergogen/package-lock.json') }}
           restore-keys: ${{ runner.os }}
-                    
+
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          
+      - name: Setup Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin' # See 'Supported distributions' for available options
+          java-version: '11'
+
+      - name: Install packages we need
+        if: ${{ !env.ACT }}
+        run: |
+          pip install xvfbwrapper
+          sudo apt-get -qq update
+          sudo apt-get -qq install -y kicad kicad-libraries zip inkscape make git libmagickwand-dev inkscape libgraphicsmagick1-dev libmagickcore-dev openscad recordmydesktop xvfb xdotool
+
       - name: Setup dhall
         uses: dhall-lang/setup-dhall@v4
         
@@ -57,56 +65,56 @@ jobs:
           npm i
 
       - name: Create ergogen config
-        run: bin/dhall-to-yaml --explain --file variants/${{ env.ANNA_VARIANT }}.dhall --output output/${{ env.ANNA_VARIANT }}.yaml
+        run: bin/dhall-to-yaml --explain --file variants/${{ matrix.keeb}}.dhall --output output/${{ matrix.keeb}}.yaml
 
       - name: Archive (Ergogen Config)
         if: ${{ !env.ACT }}
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ env.ANNA_VARIANT }}
-          path: output/${{ env.ANNA_VARIANT }}.yaml
+          name: ${{ matrix.keeb}}
+          path: output/${{ matrix.keeb}}.yaml
       
       - name: Run ergogen
         run: |
           cd ergogen
-          node src/cli.js -o ../output ../output/${{ env.ANNA_VARIANT }}.yaml
+          node src/cli.js -o ../output ../output/${{ matrix.keeb}}.yaml
           cd ..
-          cp output/pcbs/${{ env.ANNA_VARIANT }}.kicad_pcb ${{ env.ANNA_VARIANT }}_ergogen.kicad_pcb
+          cp output/pcbs/${{ matrix.keeb}}.kicad_pcb ${{ matrix.keeb}}_ergogen.kicad_pcb
 
       - name: Archive (Ergogen PCB)
         if: ${{ !env.ACT }}
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ env.ANNA_VARIANT }}
-          path: ${{ env.ANNA_VARIANT }}_ergogen.kicad_pcb
+          name: ${{ matrix.keeb}}
+          path: ${{ matrix.keeb}}_ergogen.kicad_pcb
 
       - name: Export DSN file
         if: ${{ !env.ACT }}
         run: |
           chmod +x bin/export_dsn.py
-          ./bin/export_dsn.py ${{ env.ANNA_VARIANT }}
+          ./bin/export_dsn.py ${{ matrix.keeb}}
 
       - name: Archive (DSN file)
         if: ${{ !env.ACT }}
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ env.ANNA_VARIANT }}
-          path: output/pcbs/${{ env.ANNA_VARIANT }}.dsn
+          name: ${{ matrix.keeb}}
+          path: output/pcbs/${{ matrix.keeb}}.dsn
 
       - name: Autorouting
         if: ${{ !env.ACT }}
         run: |
           wget -O freerouting.jar https://github.com/freerouting/freerouting/releases/download/v1.4.5/freerouting-1.4.5.jar
-          cp freerouting.rules output/pcbs/${{ env.ANNA_VARIANT }}.rules
+          cp freerouting.rules output/pcbs/${{ matrix.keeb}}.rules
           chmod +x bin/freerouting.py
-          ./bin/freerouting.py ${{ env.ANNA_VARIANT }}
+          ./bin/freerouting.py ${{ matrix.keeb}}
 
       - name: Archive (SES file)
         if: ${{ !env.ACT }}
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ env.ANNA_VARIANT }}
-          path: output/pcbs/${{ env.ANNA_VARIANT }}.ses
+          name: ${{ matrix.keeb}}
+          path: output/pcbs/${{ matrix.keeb}}.ses
 
       - name: Prepare kicad gerber export
         if: ${{ !env.ACT }}
@@ -119,32 +127,25 @@ jobs:
         if: ${{ !env.ACT }}
         run: |
           chmod +x bin/import_dsn.py
-          ./bin/import_dsn.py ${{ env.ANNA_VARIANT }}
+          ./bin/import_dsn.py ${{ matrix.keeb}}
 
       - name: Archive (PCB)
         if: ${{ !env.ACT }}
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ env.ANNA_VARIANT }}
+          name: ${{ matrix.keeb}}
           path: output/pcbs/gerber_to_order/*.zip
 
       - name: Archive (Gerber)
         if: ${{ !env.ACT }}
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ env.ANNA_VARIANT }}
-          path: output/pcbs/${{ env.ANNA_VARIANT }}.kicad_pcb
-
-      - name: Archive (Previews)
-        if: ${{ !env.ACT }}
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ env.ANNA_VARIANT }}
-          path: "*.png"
+          name: ${{ matrix.keeb}}
+          path: output/pcbs/${{ matrix.keeb}}.kicad_pcb
 
       - name: Archive (Videos)
         if: ${{ github.branch != 'main' && !env.ACT }}
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ env.ANNA_VARIANT }}_videos
+          name: ${{ matrix.keeb}}_videos
           path: "*.ogv"
