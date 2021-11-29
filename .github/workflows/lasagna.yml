@@ -61,6 +61,7 @@ jobs:
           sudo apt -qq install -y recordmydesktop xvfb xdotool
 
       - run: |
+          pip cache dir
           sudo apt -qq install -y tree
           tree /usr/share/kicad
           exit 1
