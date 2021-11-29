@@ -52,7 +52,7 @@ jobs:
           sudo apt -qq install -y recordmydesktop xvfb xdotool
 
       - run: |
-          lfind / -type d -name "kicad"
+          find / -type d -name "kicad"
 
       - name: Cache
         uses: actions/cache@v2.1.7
