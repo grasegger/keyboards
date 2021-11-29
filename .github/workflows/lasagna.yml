@@ -56,8 +56,8 @@ jobs:
         if: ${{ !env.ACT }}
         run: |
           pip install xvfbwrapper
-          apt-get -qq update
-          apt-get -qq install -y kicad kicad-libraries zip inkscape make git libmagickwand-dev inkscape libgraphicsmagick1-dev libmagickcore-dev openscad recordmydesktop xvfb xdotool
+          sudo apt-get -qq update
+          sudo apt-get -qq install -y kicad kicad-libraries zip inkscape make git libmagickwand-dev inkscape libgraphicsmagick1-dev libmagickcore-dev openscad recordmydesktop xvfb xdotool
 
       - name: Setup dhall
         uses: dhall-lang/setup-dhall@v4
