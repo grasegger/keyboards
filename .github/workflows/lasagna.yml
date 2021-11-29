@@ -49,7 +49,7 @@ jobs:
       - name: Install packages we need
         if: ${{ !env.ACT }}
         run: |
-          pip install xvfbwrapper
+          pip install xvfbwrapper PcbDraw
           sudo apt-get -qq update
           sudo apt-get -qq install -y kicad kicad-libraries zip inkscape make git libmagickwand-dev inkscape libgraphicsmagick1-dev libmagickcore-dev openscad recordmydesktop xvfb xdotool
 
