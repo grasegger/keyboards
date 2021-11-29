@@ -65,6 +65,9 @@ jobs:
       - name: Create ergogen config
         run: bin/dhall-to-yaml --explain --file variants/${{ env.ANNA_VARIANT }}.dhall --output output/${{ env.ANNA_VARIANT }}.yaml
 
+        
+      - run: pcbdraw --style builtin:jlcpcb-green-hasl.json output/pcbs/lasagna.kicad_pcb lasagna_board_front.png
+
       - name: Archive (Ergogen Config)
         if: ${{ !env.ACT }}
         uses: actions/upload-artifact@v2
@@ -126,8 +129,6 @@ jobs:
         run: |
           chmod +x bin/import_dsn.py
           ./bin/import_dsn.py ${{ env.ANNA_VARIANT }}
-        
-      - run: pcbdraw --style builtin:jlcpcb-green-hasl.json output/pcbs/lasagna.kicad_pcb lasagna_board_front.png
 
       - name: Archive (PCB)
         if: ${{ !env.ACT }}
