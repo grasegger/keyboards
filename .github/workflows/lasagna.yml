@@ -30,15 +30,25 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: '3.x'
+          
+      - name: Setup Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin' # See 'Supported distributions' for available options
+          java-version: '11'
 
       - name: Global packages we need
         if: ${{ !env.ACT }}
         run: |
           pip install PcbDraw kikit xvfbwrapper
           sudo apt -qq update
-          sudo apt -qq install -y --no-install-recommends kicad openjdk-11-jre kicad-libraries zip inkscape make git libmagickwand-dev inkscape libgraphicsmagick1-dev libmagickcore-dev openscad
+          sudo apt -qq install -y --no-install-recommends kicad kicad-libraries zip inkscape make git libmagickwand-dev inkscape libgraphicsmagick1-dev libmagickcore-dev openscad
           sudo apt -qq install -y recordmydesktop xvfb xdotool
 
+      - run: |
+          ls /usr/share
+          exit 1
+          
       - name: Cache
         uses: actions/cache@v2.1.7
         if: ${{ !env.ACT }}
