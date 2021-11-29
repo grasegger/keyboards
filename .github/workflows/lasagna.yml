@@ -21,10 +21,19 @@ jobs:
           submodules: recursive
 
       - name: User cache folder
+        if: ${{ !env.ACT }}
         uses: actions/cache@v2
         with:
           path: ~/cache
           key: ${{ runner.os }}-${{ hashFiles('.github/workflows/*') }}
+
+      - name: Cache node modules
+        uses: actions/cache@v2.1.7
+        if: ${{ !env.ACT }}
+        with:
+          path: ergogen/node_modules
+          key: ${{ runner.os }}-${{ hashFiles('ergogen/package-lock.json') }}
+          restore-keys: ${{ runner.os }}
 
       - name: Setup node
         uses: actions/setup-node@v2
@@ -52,16 +61,9 @@ jobs:
           sudo apt -qq install -y recordmydesktop xvfb xdotool
 
       - run: |
-          find / -type d -name "kicad"
+          ls /usr/share/kicad
+          ls /usr/lib/kicad
 
-      - name: Cache
-        uses: actions/cache@v2.1.7
-        if: ${{ !env.ACT }}
-        with:
-          path: ergogen/node_modules
-          key: ${{ runner.os }}-${{ hashFiles('ergogen/package-lock.json') }}
-          restore-keys: ${{ runner.os }}
-                    
       - name: Setup dhall
         uses: dhall-lang/setup-dhall@v4
         
