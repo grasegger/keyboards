@@ -20,6 +20,14 @@ jobs:
         with:
           submodules: recursive
 
+      - name: User cache folder
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/cache
+            !~/cache/exclude
+          key: ${{ runner.os }}-
+
       - name: Setup node
         uses: actions/setup-node@v2
         with:
