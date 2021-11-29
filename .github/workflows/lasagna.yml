@@ -39,12 +39,6 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ env.NODE_VERSION }}
-
-      - name: Setup python
-        if: ${{ !env.ACT }}
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.x'
           
       - name: Setup Java
         uses: actions/setup-java@v2
@@ -133,11 +127,7 @@ jobs:
           chmod +x bin/import_dsn.py
           ./bin/import_dsn.py ${{ env.ANNA_VARIANT }}
         
-      - name: Generate pcb preview
-        uses: mosteo-actions/docker-run@v1
-        with:
-          image: yaqwsx/kikit:nightly
-          command: pcbdraw --style builtin:jlcpcb-green-hasl.json output/pcbs/lasagna.kicad_pcb lasagna_board_front.png
+      - run: pcbdraw --style builtin:jlcpcb-green-hasl.json output/pcbs/lasagna.kicad_pcb lasagna_board_front.png
 
       - name: Archive (PCB)
         if: ${{ !env.ACT }}
