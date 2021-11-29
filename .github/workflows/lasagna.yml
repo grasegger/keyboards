@@ -24,7 +24,7 @@ jobs:
         if: ${{ !env.ACT }}
         uses: actions/cache@v2
         with:
-          path: ~/cache
+          path: /home/runner/.cache/pip
           key: ${{ runner.os }}-${{ hashFiles('.github/workflows/*') }}
 
       - name: Cache node modules
@@ -52,13 +52,15 @@ jobs:
           distribution: 'temurin' # See 'Supported distributions' for available options
           java-version: '11'
 
-      - name: Global packages we need
+      - name: python packages we need
         if: ${{ !env.ACT }}
         run: |
           pip install PcbDraw kikit xvfbwrapper
-          sudo apt -qq update
-          sudo apt -qq install -y --no-install-recommends kicad kicad-libraries zip inkscape make git libmagickwand-dev inkscape libgraphicsmagick1-dev libmagickcore-dev openscad
-          sudo apt -qq install -y recordmydesktop xvfb xdotool
+
+      - uses: awalsh128/cache-apt-pkgs-action@v1
+        with:
+          packages:  kicad kicad-libraries zip inkscape make git libmagickwand-dev inkscape libgraphicsmagick1-dev libmagickcore-dev openscad recordmydesktop xvfb xdotool
+          version: 1.0
 
       - name: Setup dhall
         uses: dhall-lang/setup-dhall@v4
@@ -74,8 +76,8 @@ jobs:
 
       - run: |
           pip cache dir
-          pcbdraw --style builtin:jlcpcb-green-hasl.json output/${{ env.ANNA_VARIANT }}.yaml ${{ env.ANNA_VARIANT }}.png
-          exit 1
+#          pcbdraw --style builtin:jlcpcb-green-hasl.json output/${{ env.ANNA_VARIANT }}.yaml ${{ env.ANNA_VARIANT }}.png
+#          exit 1
 
       - name: Archive (Ergogen Config)
         if: ${{ !env.ACT }}
