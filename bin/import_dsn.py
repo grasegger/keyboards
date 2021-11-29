@@ -161,7 +161,7 @@ def eeschema_export_bom(output_directory):
     time.sleep(10)
     xdotool(['key', 'KP_Space'])
     time.sleep(1)
-    xdotool(['mousemove', '300', '240'])
+    xdotool(['mousemove', '400', '140'])
     xdotool(['click', '1'])
     time.sleep(1)
     xdotool(['key', 'ctrl+q'])

@@ -52,15 +52,12 @@ jobs:
           distribution: 'temurin' # See 'Supported distributions' for available options
           java-version: '11'
 
-      - name: python packages we need
+      - name: Install packages we need
         if: ${{ !env.ACT }}
         run: |
           pip install xvfbwrapper
-
-      - uses: awalsh128/cache-apt-pkgs-action@v1
-        with:
-          packages: kicad kicad-libraries zip inkscape make git imagemagick openscad recordmydesktop xvfb xdotool
-          version: 1.0
+          apt-get -qq update
+          apt-get -qq install -y kicad kicad-libraries zip inkscape make git libmagickwand-dev inkscape libgraphicsmagick1-dev libmagickcore-dev openscad recordmydesktop xvfb xdotool
 
       - name: Setup dhall
         uses: dhall-lang/setup-dhall@v4
