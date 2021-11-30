@@ -126,7 +126,6 @@ let outlines =
                    , b = Rectangle::{size = [32.0, 5.0], anchor = Anchor::{shift=[85.5, 30.0]}, operation = "add"}
                    }
         , c_final_pcb = { a = { type = "outline", name = "b_pcb", fillet = 1}
-                        , ba = Rectangle::{size = [31.95, 7.0], anchor = Anchor::{shift=[85.525, 29.0]}}
                         , b = Circle::{radius = 1.55, anchor = Anchor::{shift = [-6.5, 34.5]}}
                         , c = Circle::{radius = 1.55, anchor = Anchor::{shift = [-6.5, -25.5]}}
                         , f = Circle::{radius = 1.55, anchor = Anchor::{shift = [71.0, -15.5]}}
