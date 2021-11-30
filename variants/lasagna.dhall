@@ -93,7 +93,7 @@ let mkColumn = \(net_one: Text) -> \(net_two: Text) -> \(stagger: Double) ->
 
 let columns =
       { a = mkColumn "P10" "RST" 0.0
-      , b = mkColumn "P14" "P2" halfu
+      , b = mkColumn "P14" "P21" halfu
       , c = Column::{
         , stagger = quarteru
         , rows = Rows::{
@@ -201,7 +201,7 @@ let trackball_left =
       { type = "pimoroni477"
       , anchor = trackball_anchor
       , nets =
-        { GND = "GND", VCC = "VCC", SCA = "P17", SCL = "P20", INT = "P19" }
+        { GND = "GND", VCC = "VCC", SDA = "P2", SCL = "P3", INT = "P4" }
       }
 
 let trackball_right =
@@ -210,9 +210,9 @@ let trackball_right =
           , nets =
             { GND = "MIRROR_GND"
             , VCC = "MIRROR_VCC"
-            , SCA = "MIRROR_P17"
-            , SCL = "MIRROR_P20"
-            , INT = "MIRROR_P19"
+            , SDA = "MIRROR_P2"
+            , SCL = "MIRROR_P3"
+            , INT = "MIRROR_P4"
             }
           }
 
