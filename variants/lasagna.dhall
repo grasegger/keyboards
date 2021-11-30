@@ -67,9 +67,9 @@ let Circle = {
 
 
 let keyEdgeCut =
-      { Type = { type : Text, size : List Double, side : Text, bound : Bool }
+      { Type = { type : Text, size : List Double, side : Text, bound : Bool, operation: Text }
       , default =
-        { type = "keys", size = [ u, u ], side = "left", bound = True }
+        { type = "keys", size = [ u, u ], side = "left", bound = True, operation = "add" }
       }
 
 let keyconfig =
@@ -116,34 +116,53 @@ let columns =
 
 let points =
       { zones.matrix = { columns, key = keyconfig }
-      , mirror = { ref = "matrix_a_home", distance = -30 }
+      , mirror = { ref = "matrix_e_home", distance = 40 }
       }
 
 let outlines =
       { exports =
         { a_pcb_keys = [ keyEdgeCut::{=}, keyEdgeCut::{ side = "right" } ]
-        , b_pcb =  {
-          a = { type = "outline", name = "a_pcb_keys"}
-          , b = Rectangle::{size = [20.0, 5.0], anchor = Anchor::{shift=[-25.0, 30.0]}, operation = "add"}
-          , c = Rectangle::{size = [20.0, 5.0], anchor = Anchor::{shift=[-25.0, -20.0]}, operation = "add"}
-        }
-        , c_final_pcb = {
-          a = { type = "outline", name = "b_pcb", fillet = 1}
-          , b = Circle::{radius = 1.55, anchor = Anchor::{shift = [-6.5, 34.5]}}
-          , c = Circle::{radius = 1.55, anchor = Anchor::{shift = [-6.5, -25.5]}}
-          , d = Circle::{radius = 1.55, anchor = Anchor::{shift = [-6.5, -25.5], ref = mirror_ref}}
-          , e = Circle::{radius = 1.55, anchor = Anchor::{shift = [-6.5, 34.5], ref = mirror_ref}}
-          , f = Circle::{radius = 1.55, anchor = Anchor::{shift = [71.0, -15.5]}}
-          , g = Circle::{radius = 1.55, anchor = Anchor::{shift = [71.0, -15.5], ref = mirror_ref}}
-          , h = Circle::{radius = 1.05, anchor = Anchor::{shift = [-1.5, 34.5]}}
-          , i = Circle::{radius = 1.05, anchor = Anchor::{shift = [-1.5, -25.5]}}
-          , j = Circle::{radius = 1.05, anchor = Anchor::{shift = [55.0, -17.0]}}
-          , k = Circle::{radius = 1.05, anchor = Anchor::{shift = [-1.5, 34.5], ref = mirror_ref}}
-          , l = Circle::{radius = 1.05, anchor = Anchor::{shift = [-1.5, -25.5], ref = mirror_ref}}
-          , m = Circle::{radius = 1.05, anchor = Anchor::{shift = [55.0, -17.0], ref = mirror_ref}}
-          , n = Circle::{radius = 1.05, anchor = Anchor::{shift = [47.5, 21.5]}}
-          , o = Circle::{radius = 1.05, anchor = Anchor::{shift = [47.5, 21.5], ref = mirror_ref}}
-        }
+        , b_pcb =  { a = { type = "outline", name = "a_pcb_keys"}
+                   , b = Rectangle::{size = [32.0, 5.0], anchor = Anchor::{shift=[85.5, 30.0]}, operation = "add"}
+                   }
+        , c_final_pcb = { a = { type = "outline", name = "b_pcb", fillet = 1}
+                        , ba = Rectangle::{size = [31.95, 7.0], anchor = Anchor::{shift=[85.525, 29.0]}}
+                        , b = Circle::{radius = 1.55, anchor = Anchor::{shift = [-6.5, 34.5]}}
+                        , c = Circle::{radius = 1.55, anchor = Anchor::{shift = [-6.5, -25.5]}}
+                        , f = Circle::{radius = 1.55, anchor = Anchor::{shift = [71.0, -15.5]}}
+                        , h = Circle::{radius = 1.05, anchor = Anchor::{shift = [-1.5, 34.5]}}
+                        , i = Circle::{radius = 1.05, anchor = Anchor::{shift = [-1.5, -25.5]}}
+                        , j = Circle::{radius = 1.05, anchor = Anchor::{shift = [55.0, -17.0]}}
+                        , n = Circle::{radius = 1.05, anchor = Anchor::{shift = [47.5, 21.5]}}
+                        , d = Circle::{radius = 1.55, anchor = Anchor::{shift = [-6.5, -25.5], ref = mirror_ref}}
+                        , e = Circle::{radius = 1.55, anchor = Anchor::{shift = [-6.5, 34.5], ref = mirror_ref}}
+                        , k = Circle::{radius = 1.05, anchor = Anchor::{shift = [-1.5, 34.5], ref = mirror_ref}}
+                        , l = Circle::{radius = 1.05, anchor = Anchor::{shift = [-1.5, -25.5], ref = mirror_ref}}
+                        , m = Circle::{radius = 1.05, anchor = Anchor::{shift = [55.0, -17.0], ref = mirror_ref}}
+                        , g = Circle::{radius = 1.55, anchor = Anchor::{shift = [71.0, -15.5], ref = mirror_ref}}
+                        , o = Circle::{radius = 1.05, anchor = Anchor::{shift = [47.5, 21.5], ref = mirror_ref}}
+                        }
+          , d_shield_base = { a = { type = "outline", name = "b_pcb", fillet = 1}
+                            , ba = Rectangle::{size = [31.95, 7.0], anchor = Anchor::{shift=[85.525, 29.0]}}
+                            , b = keyEdgeCut::{size = [14.0,14.0], operation = "subtract", bound = False}
+                            , c =Circle::{radius = 21.1, anchor = Anchor::{shift = [23.0, 10.0], rotate = Natural/toInteger 45, ref = mirror_ref }}
+                            , d = Circle::{radius = 1.05, anchor = Anchor::{shift = [-6.5, 34.5]}}
+                            , e = Circle::{radius = 1.05, anchor = Anchor::{shift = [-6.5, -25.5]}}
+                            , f = Circle::{radius = 1.05, anchor = Anchor::{shift = [71.0, -15.5]}}
+                            , g = Circle::{radius = 1.05, anchor = Anchor::{shift = [-6.5, -25.5], ref = mirror_ref}}
+                            , h = Circle::{radius = 1.05, anchor = Anchor::{shift = [-6.5, 34.5], ref = mirror_ref}}
+                            , i = Circle::{radius = 1.05, anchor = Anchor::{shift = [-1.5, 34.5], ref = mirror_ref}}
+                            , j = Circle::{radius = 1.05, anchor = Anchor::{shift = [-1.5, -25.5], ref = mirror_ref}}
+                            , k = Circle::{radius = 1.05, anchor = Anchor::{shift = [55.0, -17.0], ref = mirror_ref}}
+                            , l = Circle::{radius = 1.05, anchor = Anchor::{shift = [71.0, -15.5], ref = mirror_ref}}
+                            , m = Circle::{radius = 1.05, anchor = Anchor::{shift = [47.5, 21.5], ref = mirror_ref}}
+                            , o = Rectangle::{size = [14.0,12.0], anchor = Anchor::{shift =  [ 68.5, -9.3 ]}}
+                            , p = Rectangle::{size = [15.0,3.0], anchor = Anchor::{shift =  [ 47.5, -8.0 ]}}
+                            , q = Circle::{radius = 1.55, anchor = Anchor::{shift = [45.0, -13.0]}}
+                            , r = Circle::{radius = 1.55, anchor = Anchor::{shift = [65.0, -24.0]}}
+                            , s = Circle::{radius = 1.55, anchor = Anchor::{shift = [45.0, -24.0]}}
+                            , t = Circle::{radius = 1.55, anchor = Anchor::{shift = [65.0, -13.0]}}
+                            }
         }
       }
 
@@ -236,16 +255,6 @@ let puck_right = puck_left // {
   anchor = puck_anchor  // { ref = mirror_ref }
 }
 
-let fake_ground_one = { type = "jstph"
-      , anchor = Anchor::{shift= [-14.0, -18.0]}
-      , nets = { pos = "MIRROR_GND", neg = "GND" }
-      }
-
-let fake_ground_two = { type = "jstph"
-      , anchor = Anchor::{shift= [-14.0, 32.0]}
-      , nets = { pos = "MIRROR_GND", neg = "GND" }
-      }
-
 let pcbs =
       { lasagna =
         { outlines = [ { outline = "c_final_pcb" } ]
@@ -262,10 +271,9 @@ let pcbs =
           , trackball_right
           , puck_left
           , puck_right
-          , fake_ground_one
-          , fake_ground_two
           }
         }
+      , lasagna_shield = {outlines = [{outline = "d_shield_base"}]}
       }
 
 in  { outlines, points, pcbs }
