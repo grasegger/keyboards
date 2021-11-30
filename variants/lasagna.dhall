@@ -123,16 +123,26 @@ let outlines =
       { exports =
         { a_pcb_keys = [ keyEdgeCut::{=}, keyEdgeCut::{ side = "right" } ]
         , b_pcb =  {
-          one = { type = "outline", name = "a_pcb_keys"}
-          , two = Rectangle::{size = [20.0, 5.0], anchor = Anchor::{shift=[-25.0, 30.0]}, operation = "add"}
-          , three = Rectangle::{size = [20.0, 5.0], anchor = Anchor::{shift=[-25.0, -20.0]}, operation = "add"}
+          a = { type = "outline", name = "a_pcb_keys"}
+          , b = Rectangle::{size = [20.0, 5.0], anchor = Anchor::{shift=[-25.0, 30.0]}, operation = "add"}
+          , c = Rectangle::{size = [20.0, 5.0], anchor = Anchor::{shift=[-25.0, -20.0]}, operation = "add"}
         }
         , c_final_pcb = {
-          one = { type = "outline", name = "b_pcb", fillet = 1}
-          , two = Circle::{radius = 1.55, anchor = Anchor::{shift = [-6.5, 34.5]}}
-          , three = Circle::{radius = 1.55, anchor = Anchor::{shift = [-6.5, -25.5]}}
-          , vierpzwei = Circle::{radius = 1.55, anchor = Anchor::{shift = [-6.5, -25.5], ref = mirror_ref}}
-          , vierpdrei = Circle::{radius = 1.55, anchor = Anchor::{shift = [-6.5, 34.5], ref = mirror_ref}}
+          a = { type = "outline", name = "b_pcb", fillet = 1}
+          , b = Circle::{radius = 1.55, anchor = Anchor::{shift = [-6.5, 34.5]}}
+          , c = Circle::{radius = 1.55, anchor = Anchor::{shift = [-6.5, -25.5]}}
+          , d = Circle::{radius = 1.55, anchor = Anchor::{shift = [-6.5, -25.5], ref = mirror_ref}}
+          , e = Circle::{radius = 1.55, anchor = Anchor::{shift = [-6.5, 34.5], ref = mirror_ref}}
+          , f = Circle::{radius = 1.55, anchor = Anchor::{shift = [71.0, -15.5]}}
+          , g = Circle::{radius = 1.55, anchor = Anchor::{shift = [71.0, -15.5], ref = mirror_ref}}
+          , h = Circle::{radius = 1.05, anchor = Anchor::{shift = [-1.5, 34.5]}}
+          , i = Circle::{radius = 1.05, anchor = Anchor::{shift = [-1.5, -25.5]}}
+          , j = Circle::{radius = 1.05, anchor = Anchor::{shift = [55.0, -17.0]}}
+          , k = Circle::{radius = 1.05, anchor = Anchor::{shift = [-1.5, 34.5], ref = mirror_ref}}
+          , l = Circle::{radius = 1.05, anchor = Anchor::{shift = [-1.5, -25.5], ref = mirror_ref}}
+          , m = Circle::{radius = 1.05, anchor = Anchor::{shift = [55.0, -17.0], ref = mirror_ref}}
+          , n = Circle::{radius = 1.05, anchor = Anchor::{shift = [47.5, 21.5]}}
+          , o = Circle::{radius = 1.05, anchor = Anchor::{shift = [47.5, 21.5], ref = mirror_ref}}
         }
         }
       }
