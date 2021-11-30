@@ -144,9 +144,10 @@ jobs:
           path: output/pcbs/${{ matrix.keeb}}.kicad_pcb
 
       - name: Prepare shield
-        run: |	
-          sed -i -e 's|.*pad.*||' output/pcbs/${{ matrix.keeb}}_shield.kicad_pcb
-        	sed -i -e 's|.*Dwgs.User.*||' output/pcbs/${{ matrix.keeb}}_shield.kicad_pcb
+        run: "sed -i -e 's|.*pad.*||' output/pcbs/${{ matrix.keeb}}_shield.kicad_pcb"
+
+      - name: Prepare shield
+        run: "sed -i -e 's|.*Dwgs.User.*||' output/pcbs/${{ matrix.keeb}}_shield.kicad_pcb"
 
       - name: Archive (Shield)
         if: ${{ !env.ACT }}
