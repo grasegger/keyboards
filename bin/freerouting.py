@@ -130,7 +130,7 @@ def export_bom(target):
             "-mp", "1000"
             ], close_fds=True) as freerouting_proc:
             wait_for_window('freerouting', 'Board Layout', timeout=300)
-            wait_for_window_gone('freerouting','Board Layout', timeout=300)
+            wait_for_window_gone('freerouting','Board Layout', timeout=1200)
             freerouting_proc.terminate()
 
 if __name__ == '__main__':
