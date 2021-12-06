@@ -144,7 +144,7 @@ jobs:
           path: output/pcbs/${{ matrix.keeb}}.kicad_pcb
 
       - name: Archive (Videos)
-        if: ${{ GITHUB_REF_NAME != 'main' && !env.ACT }}
+        if: ${{ env:GITHUB_REF_NAME != 'main' && !env.ACT }}
         uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.keeb}}_videos
