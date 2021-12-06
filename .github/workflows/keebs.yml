@@ -143,19 +143,6 @@ jobs:
           name: ${{ matrix.keeb}}
           path: output/pcbs/${{ matrix.keeb}}.kicad_pcb
 
-      - name: Prepare shield
-        run: "sed -i -e 's|.*pad.*||' output/pcbs/${{ matrix.keeb}}_shield.kicad_pcb"
-
-      - name: Prepare shield
-        run: "sed -i -e 's|.*Dwgs.User.*||' output/pcbs/${{ matrix.keeb}}_shield.kicad_pcb"
-
-      - name: Archive (Shield)
-        if: ${{ !env.ACT }}
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ matrix.keeb}}
-          path: output/pcbs/${{ matrix.keeb}}_shield.kicad_pcb
-
       - name: Archive (Videos)
         if: ${{ github.branch != 'main' && !env.ACT }}
         uses: actions/upload-artifact@v2
