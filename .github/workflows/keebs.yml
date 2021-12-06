@@ -10,7 +10,7 @@ jobs:
   build:
     strategy:
       matrix:
-        keeb: [lasagna]
+        keeb: [lasagna, weirdo]
     env:
       NODE_VERSION: 16
       DEBIAN_FRONTEND: noninteractive
@@ -144,7 +144,7 @@ jobs:
           path: output/pcbs/${{ matrix.keeb}}.kicad_pcb
 
       - name: Archive (Videos)
-        if: ${{ github.branch != 'main' && !env.ACT }}
+        if: ${{ GITHUB_REF_NAME != 'main' && !env.ACT }}
         uses: actions/upload-artifact@v2
         with:
           name: ${{ matrix.keeb}}_videos
