@@ -184,7 +184,7 @@ let reset = {
 }
 
 let pcbs =
-      { weirdo =
+      { weirdo_ergogen =
         { outlines = [ { outline = "c_final_pcb" } ]
         , footprints =
           { on_off_left
