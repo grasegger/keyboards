@@ -1,29 +1,3 @@
-```md
-# WARNING
+# Anna Keyboard
 
-Nothing in here should be used yet. You have been warned.
-```
-
-# anna keyboard family
-
-| name    | switch footprint | spacing | use     | controller          | keys | features                   | rev | phase      |
-|:--------|:-----------------|:--------|:--------|:--------------------|:-----|:---------------------------|-----|------------|
-| Lasagna | MX Kailh Hotswap | MX      | Typing  | bluetooth pro micro | 16   | trackball, rotary encoder  | 0.1 | unfinished |
-| EDC     | MX Kailh Hotswap | MX      | Typing  | bluetooth pro micro | 36   | nothing special            | 0.1 | unfinished |
-| Squared | Kailh Choc V2    | MX      | Typing  | bluetooth pro micro | 36   | low profile                | xxx | idea       |
-| Daemon  | MX Kailh Hotswap | MX      | Macro   | bluetooth pro micro | ???  | trackball                  | xxx | idea       |
-| Mouse   | Kailh Choc V1    | Choc    | Typing  | bluetooth pro micro | 36   | very low profile           | xxx | idea       |
-| Bread   | MX Kailh Hotswap | MX      | Testing | bluetooth pro micro | 26   | first prototype, trackball | --- | cancelled  |
-| weirdo  | MX Kailh Hotswap | MX      | Dunno   | bluetooth pro micro | 40   | ortho keys                 | 0.1 | unfinished |
-
-
-## How to build
-
-Either use the github action and its artifacts **or** install [act](https://github.com/nektos/act) and run `act -b` in the repository root.
-
-The makefile contains targets for a light build (only ergogen) and a full build (as in the cloud).
-
-## Previews
-
-### Lasagna
-![](./previews/lasagna_board.png)
+The Anna keyboard is a split ortholinear keyboard PCB with pads for kailh hotswap sockets. It has 5 columns and 4 rows on each side. It's built for usage with pro micro replacemets that have bluetooth, there is no ttrs jack.
